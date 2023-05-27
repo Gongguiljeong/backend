@@ -1,4 +1,4 @@
-package com.gongguiljeong.user;
+package com.gongguiljeong.domain.user.controller;
 
 
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.gongguiljeong.user;
+package com.gongguiljeong.domain.user.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
