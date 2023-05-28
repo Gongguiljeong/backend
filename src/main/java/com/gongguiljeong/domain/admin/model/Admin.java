@@ -2,6 +2,7 @@ package com.gongguiljeong.domain.admin.model;
 
 import com.gongguiljeong.domain.brand.model.Brand;
 import com.gongguiljeong.global.base.BaseEntity;
+import com.gongguiljeong.global.base.UserAdmin;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -16,7 +17,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Admin extends BaseEntity implements UserDetails {
+public class Admin extends BaseEntity implements UserDetails, UserAdmin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,11 +41,8 @@ public class Admin extends BaseEntity implements UserDetails {
     private String email;
 
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition="ENUM('USER','ADMIN')" ,nullable = false )
     private Role role = Role.USER;
-
-    private String refreshToken;
-
-    private String accessToken;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -79,6 +77,29 @@ public class Admin extends BaseEntity implements UserDetails {
     @Override
     public boolean isEnabled() { // 계정이 활성화 되어있는지
         return true;
+    }
+
+    public Admin(Long id, Role role) {
+        this.id = id;
+        this.role = role;
+    }
+
+    public Admin(Brand brand, String name, String loginId, String password, String email) {
+        this.brand = brand;
+        this.name = name;
+        this.loginId = loginId;
+        this.password = password;
+        this.email = email;
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public Role getRole() {
+        return role;
     }
 }
 
