@@ -11,10 +11,10 @@ server:
 
 spring:
 #  servlet:
-#    multipart:
-#      enabled: true
-#      max-file-size: 100MB
-#      max-request-size: 100MB
+  ##    multipart:
+  ##      enabled: true
+  ##      max-file-size: 100MB
+  ##      max-request-size: 100MB
 
   datasource:
     url: jdbc:mysql://localhost:3306/gongguiljeong?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
@@ -31,7 +31,7 @@ spring:
   #      pool-name: hikari_pool
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
 #      naming:
 #        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
@@ -40,6 +40,7 @@ spring:
         use_sql_comments: true
         format_sql: true
         show_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
     open-in-view: false
 
   data:
