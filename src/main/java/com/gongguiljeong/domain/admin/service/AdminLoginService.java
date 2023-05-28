@@ -16,8 +16,8 @@ public class AdminLoginService implements UserDetailsService {
     private final AdminRepository adminRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return adminRepository.findByLoginId(username).orElseThrow(() -> new InternalAuthenticationServiceException("인증 실패"));
+    public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
+        return adminRepository.findByLoginId(loginId).orElseThrow(() -> new InternalAuthenticationServiceException("인증 실패"));
 
     }
 }

@@ -41,8 +41,8 @@ public class Admin extends BaseEntity implements UserDetails, UserAdmin {
     private String email;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition="ENUM('USER','ADMIN')" ,nullable = false )
-    private Role role = Role.USER;
+    @Column(columnDefinition = "ENUM('USER','ADMIN')", nullable = false)
+    private Role role = Role.BRAND;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
