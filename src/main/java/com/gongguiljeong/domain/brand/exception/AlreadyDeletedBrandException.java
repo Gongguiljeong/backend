@@ -7,7 +7,4 @@ public class AlreadyDeletedBrandException extends RuntimeException {
         super(MESSAGE);
     }
 
-    public AlreadyDeletedBrandException(Throwable cause) {
-        super(MESSAGE, cause);
-    }
 }

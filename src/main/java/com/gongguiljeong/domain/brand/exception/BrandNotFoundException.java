@@ -7,7 +7,4 @@ public class BrandNotFoundException extends RuntimeException {
         super(MESSAGE);
     }
 
-    public BrandNotFoundException(Throwable cause) {
-        super(MESSAGE, cause);
-    }
 }
