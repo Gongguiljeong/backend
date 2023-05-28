@@ -1,0 +1,13 @@
+package com.gongguiljeong.domain.brand.dto;
+
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
+public class BrandUpdateRequest {
+
+    private final String name;
+    private final String link;
+}

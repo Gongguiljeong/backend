@@ -1,5 +1,6 @@
 package com.gongguiljeong.domain.brand.model;
 
+import com.gongguiljeong.domain.brand.dto.BrandUpdateRequest;
 import com.gongguiljeong.global.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -23,5 +24,14 @@ public class Brand extends BaseEntity {
     @Column(nullable = false)
     private String link;
 
+    public Brand(String name, String link) {
+        this.name = name;
+        this.link = link;
+    }
+
+    public void update(BrandUpdateRequest brandUpdateRequest) {
+        this.name = brandUpdateRequest.getName();
+        this.link = brandUpdateRequest.getLink();
+    }
 }
 
