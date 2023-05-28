@@ -28,16 +28,21 @@ public class BrandService {
         brandRepository.save(brandCreateRequest.toEntity());
     }
 
-    @Transactional
-    public void deleteBrand(Long id) {
-        Brand brand = brandRepository.findById(id).orElseThrow(BrandNotFoundException::new);
-        if (brand.isUsed()) {
-            brand.delete();
-            return;
-        }
-        throw new AlreadyDeletedBrandException();
-    }
-
+    //    @Transactional
+//    public void deleteBrand(Long id) {
+//        Brand brand = brandRepository.findById(id).orElseThrow(BrandNotFoundException::new);
+//        if (brand.isUsed()) {
+//            brand.delete();
+//        }
+//    }
+//
+//    @Transactional
+//    public void restoreBrand(Long id) {
+//        Brand brand = brandRepository.findById(id).orElseThrow(BrandNotFoundException::new);
+//        if (!brand.isUsed()) {
+//            brand.restore();
+//        }
+//    }
     @Transactional
     public void updateBrand(Long id, BrandUpdateRequest brandUpdateRequest) {
         Brand brand = brandRepository.findById(id).orElseThrow(BrandNotFoundException::new);
@@ -49,7 +54,7 @@ public class BrandService {
         return new BrandResponse(brand);
     }
 
-    public Page<BrandResponse> getBrandList(BrandSearchCondition brandSearchCondition, Pageable pageable) {
+    public Page<BrandResponse> readBrandList(BrandSearchCondition brandSearchCondition, Pageable pageable) {
         return brandCustomRepository.getBrandList(brandSearchCondition, pageable);
     }
 

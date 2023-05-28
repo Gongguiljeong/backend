@@ -32,6 +32,7 @@ public class Brand extends BaseEntity {
     public void update(BrandUpdateRequest brandUpdateRequest) {
         this.name = brandUpdateRequest.getName();
         this.link = brandUpdateRequest.getLink();
+        this.used = brandUpdateRequest.getUsed();
     }
 }
 

@@ -36,17 +36,24 @@ public class BrandController {
 
     @Operation(summary = "브랜드 여러개 읽기 ", description = "브랜드 리스트 가져오기")
     @GetMapping("")
-    public ResponseEntity<?> getBrandList(@Valid @RequestBody(required = false) BrandSearchCondition brandSearchCondition, Pageable pageable) {
-        Page<BrandResponse> brandList = brandService.getBrandList(brandSearchCondition, pageable);
+    public ResponseEntity<?> readBrandList(@Valid @RequestBody(required = false) BrandSearchCondition brandSearchCondition, Pageable pageable) {
+        Page<BrandResponse> brandList = brandService.readBrandList(brandSearchCondition, pageable);
         return ResponseEntity.ok(brandList);
     }
 
-    @Operation(summary = "브랜드 삭제하기")
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteBrand(@PathVariable Long id) {
-        brandService.deleteBrand(id);
-        return ResponseEntity.ok("브랜드 삭제완료");
-    }
+//    @Operation(summary = "브랜드 삭제하기")
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<?> deleteBrand(@PathVariable Long id) {
+//        brandService.deleteBrand(id);
+//        return ResponseEntity.ok("브랜드 삭제완료");
+//    }
+//
+//    @Operation(summary = "브랜드 복구하기")
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<?> restoreBrand(@PathVariable Long id) {
+//        brandService.restoreBrand(id);
+//        return ResponseEntity.ok("브랜드 삭제완료");
+//    }
 
     @Operation(summary = "브랜드 업데이트")
     @PutMapping("/{id}")

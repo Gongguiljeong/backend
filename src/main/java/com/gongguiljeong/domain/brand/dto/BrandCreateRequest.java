@@ -2,7 +2,7 @@ package com.gongguiljeong.domain.brand.dto;
 
 
 import com.gongguiljeong.domain.brand.model.Brand;
-import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -10,8 +10,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BrandCreateRequest {
 
-    
+
+    @NotBlank
     private final String name;
+
+    @NotBlank
     private final String link;
 
     public Brand toEntity() {
