@@ -1,20 +1,20 @@
 server:
   port: 8080
-#  servlet:
-#    encoding:
-#      charset: UTF-8
-#      enabled: true
-#      force: true
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
 #  error:
 #    whitelabel:
 #      enabled: false
 
 spring:
-#  servlet:
-  ##    multipart:
-  ##      enabled: true
-  ##      max-file-size: 100MB
-  ##      max-request-size: 100MB
+  servlet:
+      multipart:
+        enabled: true
+        max-file-size: 100MB
+        max-request-size: 100MB
 
   datasource:
     url: jdbc:mysql://localhost:3306/gongguiljeong?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
@@ -32,8 +32,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
-#      naming:
-#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
         default_batch_fetch_size: 1000
@@ -49,11 +47,6 @@ spring:
         default-page-size: 100
         max-page-size: 2000
         one-indexed-parameters: on # paging 1부터 시작하기
-
-#  mvc:
-#    hidden-method:
-#      filter:
-#        enabled: true
 
 logging.level:
   #  root: info
