@@ -4,6 +4,7 @@ package com.gongguiljeong.domain.gongguiljeong.model;
 import com.gongguiljeong.domain.admin.model.Admin;
 import com.gongguiljeong.domain.category.model.MainCategory;
 import com.gongguiljeong.domain.category.model.SubCategory;
+import com.gongguiljeong.domain.image.model.MainImage;
 import com.gongguiljeong.domain.influencer.model.Influencer;
 import com.gongguiljeong.global.base.BaseEntity;
 import jakarta.persistence.*;
@@ -22,9 +23,9 @@ public class Gongguiljeong extends BaseEntity {
     @Column(name = "gongguiljeong_id")
     private Long id;
 
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "main_image_id", nullable = false)
-//    private MainImage mainImage;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "main_image_id", nullable = false)
+    private MainImage mainImage;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "main_category_id", nullable = false)
