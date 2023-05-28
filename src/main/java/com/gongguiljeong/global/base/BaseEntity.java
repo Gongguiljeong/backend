@@ -1,9 +1,6 @@
 package com.gongguiljeong.global.base;
 
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -18,6 +15,7 @@ import java.time.LocalDateTime;
 public class BaseEntity {
 
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('Y','N')", nullable = false)
     protected Used used = Used.Y;
 
     @CreatedDate
@@ -25,4 +23,17 @@ public class BaseEntity {
 
     @LastModifiedDate
     protected LocalDateTime updateDate;
+
+
+    public void delete() {
+        this.used = Used.N;
+    }
+
+    public void restore() {
+        this.used = Used.Y;
+    }
+
+    public boolean isUsed() {
+        return this.used.equals(Used.Y);
+    }
 }
