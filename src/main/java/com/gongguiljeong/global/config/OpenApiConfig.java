@@ -11,9 +11,9 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI openAPI() {
         Info info = new Info()
-                .title("community")
+                .title("공구일정 API")
                 .version("v1.0.0")
-                .description("API에 대한 설명 부분");
+                .description("공구일정 API");
 
         return new OpenAPI()
                 .components(new Components())
