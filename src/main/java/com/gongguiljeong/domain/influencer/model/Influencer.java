@@ -1,8 +1,7 @@
 package com.gongguiljeong.domain.influencer.model;
 
 
-import com.gongguiljeong.domain.user.model.User;
-import com.gongguiljeong.global.base.BaseEntity;
+import com.gongguiljeong.global.base_model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -20,5 +19,9 @@ public class Influencer extends BaseEntity {
     private String name;
     private String link;
 
+    public Influencer(String name, String link) {
+        this.name = name;
+        this.link = link;
+    }
 }
 
