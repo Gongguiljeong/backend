@@ -3,6 +3,7 @@ package com.gongguiljeong.domain.admin.dto;
 
 import com.gongguiljeong.domain.admin.model.Admin;
 import com.gongguiljeong.domain.brand.model.Brand;
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
@@ -25,10 +26,10 @@ public class AdminJoinRequest {
     @NotBlank
     private final String email;
 
-    @NotEmpty
+    @Digits(integer = 5, fraction = 0)
     private final Long brandId;
 
     public Admin toEntity(Brand brand, BCryptPasswordEncoder passwordEncoder) {
-        return new Admin(brand, loginId, passwordEncoder.encode(password), name, email);
+        return new Admin(brand, name, loginId,  passwordEncoder.encode(password), email);
     }
 }

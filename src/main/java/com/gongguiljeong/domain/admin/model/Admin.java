@@ -1,15 +1,14 @@
 package com.gongguiljeong.domain.admin.model;
 
 import com.gongguiljeong.domain.brand.model.Brand;
-import com.gongguiljeong.global.base.BaseEntity;
-import com.gongguiljeong.global.base.UserAdmin;
+import com.gongguiljeong.global.base_model.BaseEntity;
+import com.gongguiljeong.global.base_model.UserAdmin;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
@@ -17,14 +16,14 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Admin extends BaseEntity implements UserDetails, UserAdmin {
+public class Admin extends BaseEntity implements UserAdmin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "admin_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id", nullable = false)
     private Brand brand;
 
