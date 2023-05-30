@@ -1,4 +1,4 @@
-package com.gongguiljeong.global.base;
+package com.gongguiljeong.global.base_model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
