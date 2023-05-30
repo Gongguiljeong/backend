@@ -1,7 +1,7 @@
 package com.gongguiljeong.domain.image.model;
 
 
-import com.gongguiljeong.global.base.BaseEntity;
+import com.gongguiljeong.global.base_model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -22,4 +22,9 @@ public class MainImage extends BaseEntity  {
 
     @Column(nullable = false)
     private String link;
+
+    public MainImage(String name, String link) {
+        this.name = name;
+        this.link = link;
+    }
 }

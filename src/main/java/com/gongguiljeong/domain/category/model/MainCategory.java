@@ -1,6 +1,6 @@
 package com.gongguiljeong.domain.category.model;
 
-import com.gongguiljeong.global.base.BaseEntity;
+import com.gongguiljeong.global.base_model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -17,4 +17,8 @@ public class MainCategory extends BaseEntity {
 
     @Column(nullable = false, unique = true)
     private String name;
+
+    public MainCategory(String name) {
+        this.name = name;
+    }
 }
