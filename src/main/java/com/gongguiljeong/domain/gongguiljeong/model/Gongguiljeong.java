@@ -6,7 +6,7 @@ import com.gongguiljeong.domain.category.model.MainCategory;
 import com.gongguiljeong.domain.category.model.SubCategory;
 import com.gongguiljeong.domain.image.model.MainImage;
 import com.gongguiljeong.domain.influencer.model.Influencer;
-import com.gongguiljeong.global.base.BaseEntity;
+import com.gongguiljeong.global.base_model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -27,11 +27,11 @@ public class Gongguiljeong extends BaseEntity {
     @JoinColumn(name = "main_image_id", nullable = false)
     private MainImage mainImage;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "main_category_id", nullable = false)
     private MainCategory mainCategory;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sub_category_id", nullable = false)
     private SubCategory subCategory;
 
@@ -49,4 +49,29 @@ public class Gongguiljeong extends BaseEntity {
     private LocalDateTime openDate;
     private LocalDateTime closeDate;
     private int interestCount;
+
+
+    public Gongguiljeong(MainImage mainImage, MainCategory mainCategory, SubCategory subCategory, Influencer influencer, Admin admin, String title, String link, LocalDateTime openDate, LocalDateTime closeDate) {
+        this.mainImage = mainImage;
+        this.mainCategory = mainCategory;
+        this.subCategory = subCategory;
+        this.influencer = influencer;
+        this.admin = admin;
+        this.title = title;
+        this.link = link;
+        this.openDate = openDate;
+        this.closeDate = closeDate;
+        this.interestCount = 0;
+    }
+
+    public Gongguiljeong(MainImage mainImage, MainCategory mainCategory, SubCategory subCategory, Influencer influencer, Admin admin, String title, String link) {
+        this.mainImage = mainImage;
+        this.mainCategory = mainCategory;
+        this.subCategory = subCategory;
+        this.influencer = influencer;
+        this.admin = admin;
+        this.title = title;
+        this.link = link;
+        this.interestCount = 0;
+    }
 }
