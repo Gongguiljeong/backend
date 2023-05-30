@@ -1,8 +1,7 @@
 package com.gongguiljeong.domain.category.model;
 
-import com.gongguiljeong.domain.category.model.MainCategory;
 import com.gongguiljeong.domain.user.model.User;
-import com.gongguiljeong.global.base.BaseEntity;
+import com.gongguiljeong.global.base_model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

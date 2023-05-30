@@ -2,7 +2,7 @@ package com.gongguiljeong.domain.interest_gongguiljeong.model;
 
 import com.gongguiljeong.domain.gongguiljeong.model.Gongguiljeong;
 import com.gongguiljeong.domain.user.model.User;
-import com.gongguiljeong.global.base.BaseEntity;
+import com.gongguiljeong.global.base_model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
