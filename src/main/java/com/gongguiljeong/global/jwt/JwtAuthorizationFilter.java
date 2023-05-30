@@ -1,8 +1,6 @@
 package com.gongguiljeong.global.jwt;
 
-import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.gongguiljeong.domain.admin.model.Admin;
-import com.gongguiljeong.global.util.CustomResponse;
+import com.gongguiljeong.global.base_model.UserAdmin;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,40 +12,37 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 
 @Slf4j
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
+
+
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        log.info("인가필터");
-        String requestURI = request.getRequestURI();
-        if (!requestURI.equals("/refresh") &&isHeaderVerify(request, response)) {
-            try {
-                String token = request.getHeader(HttpHeaders.AUTHORIZATION).replace(Jwt.PREFIX, "");
-                Admin admin = (Admin) Jwt.accessTokenVerify(token);
-                Authentication authentication = new UsernamePasswordAuthenticationToken(admin, null, admin.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-                chain.doFilter(request, response);
-            } catch (TokenExpiredException e) {
-                CustomResponse.unAuthentication(response, "토큰이 만료됨");
-            } catch (Exception e) {
-                CustomResponse.unAuthentication(response, "토큰이 없음");
-            }
-        } else {
-            chain.doFilter(request, response);
+        log.info("jwt 인가 필터");
+        JwtProvider jwtProvider = new JwtProvider();
+        String accessToken = resolveToken(request);
+        log.info("accessToken : {}", accessToken);
+        if (StringUtils.hasText(accessToken) && jwtProvider.validateAccessToken(accessToken)) {
+            UserAdmin userAdmin = jwtProvider.accessTokenVerify(accessToken);
+            Authentication authentication = new UsernamePasswordAuthenticationToken(userAdmin, null, userAdmin.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
+        chain.doFilter(request, response);
     }
 
-    private boolean isHeaderVerify(HttpServletRequest request, HttpServletResponse response) {
-        String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-        return !(header == null) && header.startsWith(Jwt.PREFIX);
+    private String resolveToken(HttpServletRequest request) {
+        String accessToken = request.getHeader(HttpHeaders.AUTHORIZATION);
+        if (StringUtils.hasText(accessToken) && accessToken.startsWith(JwtProvider.PREFIX)) {
+            return accessToken.replace(JwtProvider.PREFIX, "");
+        }
+        return null;
     }
-
-
 }

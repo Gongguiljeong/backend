@@ -28,7 +28,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         this.authenticationManager = authenticationManager;
     }
 
-    //    원래 /login 하면 동작함
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
@@ -41,7 +40,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         }
     }
 
-    //로그인 실패하면 반환한다.
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException {
         CustomResponse.unAuthentication(response, "로그인 실패 ");
@@ -49,9 +47,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException {
+        JwtProvider jwtProvider = new JwtProvider();
         Admin admin = (Admin) authResult.getPrincipal();
-        String jwtToken = Jwt.createAccessToken(admin);
-        String refreshToken = Jwt.createRefreshToken(admin);
+        String jwtToken = jwtProvider.createAccessToken(admin);
+        String refreshToken = jwtProvider.createRefreshToken(admin);
         response.addHeader(HttpHeaders.AUTHORIZATION, jwtToken);
         ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
                 .maxAge(Duration.ofDays(14))
