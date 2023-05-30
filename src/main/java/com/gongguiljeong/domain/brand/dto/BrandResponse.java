@@ -2,7 +2,7 @@ package com.gongguiljeong.domain.brand.dto;
 
 
 import com.gongguiljeong.domain.brand.model.Brand;
-import com.gongguiljeong.global.base.Used;
+import com.gongguiljeong.global.base_model.Used;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

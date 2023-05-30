@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 public class BrandCreateRequest {
 
 
+
+
     @NotBlank
     private final String name;
 

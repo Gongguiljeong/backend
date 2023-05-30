@@ -1,7 +1,7 @@
 package com.gongguiljeong.domain.brand.model;
 
 import com.gongguiljeong.domain.brand.dto.BrandUpdateRequest;
-import com.gongguiljeong.global.base.BaseEntity;
+import com.gongguiljeong.global.base_model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -16,7 +16,6 @@ public class Brand extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "brand_id")
     private Long id;
-
 
     @Column(nullable = false, unique = true)
     private String name;

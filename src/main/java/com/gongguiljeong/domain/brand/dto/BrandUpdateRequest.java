@@ -1,7 +1,7 @@
 package com.gongguiljeong.domain.brand.dto;
 
 
-import com.gongguiljeong.global.base.Used;
+import com.gongguiljeong.global.base_model.Used;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

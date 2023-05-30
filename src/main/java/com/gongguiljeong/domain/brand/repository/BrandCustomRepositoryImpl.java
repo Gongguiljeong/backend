@@ -4,7 +4,7 @@ package com.gongguiljeong.domain.brand.repository;
 import com.gongguiljeong.domain.brand.dto.BrandResponse;
 import com.gongguiljeong.domain.brand.dto.BrandSearchCondition;
 import com.gongguiljeong.domain.brand.dto.QBrandResponse;
-import com.gongguiljeong.global.base.Used;
+import com.gongguiljeong.global.base_model.Used;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
