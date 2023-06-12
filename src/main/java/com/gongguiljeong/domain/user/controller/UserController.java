@@ -48,7 +48,7 @@ public class UserController {
 
     @Operation(summary = "리프레쉬 토큰 검증하고 엑세스토큰 반환")
     @PostMapping("/refresh")
-    public ResponseEntity<?> getInfo(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> getInfo(HttpServletRequest request, HttpServletResponse response, @CookieValue(value = "refreshToken") Cookie refresh) {
         Cookie[] cookies = request.getCookies();
         JwtProvider jwtProvider = new JwtProvider();
         String refreshToken = getRefreshToken(cookies);
