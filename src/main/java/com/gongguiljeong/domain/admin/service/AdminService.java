@@ -29,13 +29,13 @@ public class AdminService {
 
     @Transactional
     public void join(AdminJoinRequest adminJoinRequest) {
-        boolean isExistAdmin = adminRepository.existsByLoginId(adminJoinRequest.getLoginId());
-        if (isExistAdmin) {
+        boolean existAdmin = adminRepository.existsByLoginId(adminJoinRequest.getLoginId());
+        if (existAdmin) {
             throw new AlreadyExistAdminException();
         }
 
-        isExistAdmin = adminRepository.existsByEmail(adminJoinRequest.getEmail());
-        if (isExistAdmin) {
+        existAdmin = adminRepository.existsByEmail(adminJoinRequest.getEmail());
+        if (existAdmin) {
             throw new AlreadyExistAdminException();
         }
 
