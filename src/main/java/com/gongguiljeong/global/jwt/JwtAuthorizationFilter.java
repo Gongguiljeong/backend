@@ -1,5 +1,6 @@
 package com.gongguiljeong.global.jwt;
 
+import com.gongguiljeong.domain.common.domain.AuthenticationEntity;
 import com.gongguiljeong.domain.common.domain.UserAdmin;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -33,8 +34,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         String accessToken = resolveToken(request);
         log.info("accessToken : {}", accessToken);
         if (StringUtils.hasText(accessToken) && jwtProvider.validateAccessToken(accessToken)) {
-            UserAdmin userAdmin = jwtProvider.accessTokenVerify(accessToken);
-            Authentication authentication = new UsernamePasswordAuthenticationToken(userAdmin, null, userAdmin.getAuthorities());
+            AuthenticationEntity authenticationEntity = jwtProvider.accessTokenVerify(accessToken);
+            Authentication authentication = new UsernamePasswordAuthenticationToken(authenticationEntity, null, authenticationEntity.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         chain.doFilter(request, response);

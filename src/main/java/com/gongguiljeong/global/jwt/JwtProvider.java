@@ -6,8 +6,11 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.gongguiljeong.domain.admin.domain.Admin;
 import com.gongguiljeong.domain.admin.domain.Role;
+import com.gongguiljeong.domain.common.domain.AuthenticationEntity;
+import com.gongguiljeong.domain.common.domain.Member;
 import com.gongguiljeong.domain.common.domain.UserAdmin;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -27,27 +30,27 @@ public class JwtProvider {
     private static final long REFRESH_TOKEN_EXPIRATION_TIME = Duration.ofDays(14).toMillis();
     public static final String PREFIX = "Bearer ";
 
-    public String createAccessToken(UserAdmin useradmin) {
-        String jwtToken = JWT.create().withSubject("jwt").withExpiresAt(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION_TIME)).withClaim("id", useradmin.getId()).withClaim("role", useradmin.getRole().name()).sign(Algorithm.HMAC512(ACCESS_TOKEN_SECRET_KEY));
+    public String createAccessToken(AuthenticationEntity authenticationEntity) {
+        String jwtToken = JWT.create().withSubject("jwt").withExpiresAt(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION_TIME)).withClaim("id", authenticationEntity.getId()).withClaim("role", authenticationEntity.getRole().name()).sign(Algorithm.HMAC512(ACCESS_TOKEN_SECRET_KEY));
         return PREFIX + jwtToken;
     }
 
-    public String createRefreshToken(UserAdmin userADmin) {
-        return JWT.create().withSubject("jwt").withExpiresAt(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRATION_TIME)).withClaim("id", userADmin.getId()).withClaim("role", userADmin.getRole().name()).sign(Algorithm.HMAC512(REFRESH_TOKEN_SECRET_KEY));
+    public String createRefreshToken(AuthenticationEntity authenticationEntity) {
+        return JWT.create().withSubject("jwt").withExpiresAt(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRATION_TIME)).withClaim("id", authenticationEntity.getId()).withClaim("role", authenticationEntity.getRole().name()).sign(Algorithm.HMAC512(REFRESH_TOKEN_SECRET_KEY));
     }
 
-    public UserAdmin accessTokenVerify(String accessToken) {
+    public AuthenticationEntity accessTokenVerify(String accessToken) {
         DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC512(ACCESS_TOKEN_SECRET_KEY)).build().verify(accessToken);
         Long id = decodedJWT.getClaim("id").asLong();
         String role = decodedJWT.getClaim("role").asString();
-        return new Admin(id, Role.valueOf(role));
+        return new AuthenticationEntity(id, Role.valueOf(role));
     }
 
-    public UserAdmin refreshTokenVerify(String refreshToken) {
+    public AuthenticationEntity refreshTokenVerify(String refreshToken) {
         DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC512(REFRESH_TOKEN_SECRET_KEY)).build().verify(refreshToken);
         Long id = decodedJWT.getClaim("id").asLong();
         String role = decodedJWT.getClaim("role").asString();
-        return new Admin(id, Role.valueOf(role));
+        return new AuthenticationEntity(id, Role.valueOf(role));
     }
 
     public boolean validateAccessToken(String accessToken) {

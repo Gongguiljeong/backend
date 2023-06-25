@@ -4,6 +4,7 @@ package com.gongguiljeong.domain.admin.service;
 import com.gongguiljeong.domain.admin.domain.Admin;
 import com.gongguiljeong.domain.admin.domain.AdminJoinRequest;
 import com.gongguiljeong.domain.admin.domain.AdminResponse;
+import com.gongguiljeong.domain.admin.domain.LoginRequest;
 import com.gongguiljeong.domain.admin.repository.AdminRepository;
 import com.gongguiljeong.domain.brand.domain.Brand;
 import com.gongguiljeong.domain.brand.repository.BrandRepository;
@@ -28,7 +29,7 @@ public class AdminService {
 
     @Transactional
     public void join(AdminJoinRequest adminJoinRequest) {
-        boolean existAdmin = adminRepository.existsByLoginId(adminJoinRequest.getLoginId());
+        boolean existAdmin = adminRepository.existsByUsername(adminJoinRequest.getUsername());
         if (existAdmin) {
             throw new GongguiljeongException(ExceptionCode.BRAND_ALREADY_EXIST);
         }
@@ -38,7 +39,7 @@ public class AdminService {
             throw new GongguiljeongException(ExceptionCode.BRAND_ALREADY_EXIST);
         }
 
-        Brand brand = brandRepository.findById(adminJoinRequest.getBrandId()).orElseThrow( () -> new GongguiljeongException(ExceptionCode.BRAND_NOT_FOUND));
+        Brand brand = brandRepository.findById(adminJoinRequest.getBrandId()).orElseThrow(() -> new GongguiljeongException(ExceptionCode.BRAND_NOT_FOUND));
         adminRepository.save(adminJoinRequest.toEntity(brand, passwordEncoder));
     }
 
@@ -50,5 +51,15 @@ public class AdminService {
     public Page<AdminResponse> readAdminList(Pageable pageable) {
         return adminRepository.findAll(pageable).map(AdminResponse::new);
 
+    }
+
+
+    @Transactional
+    public Admin login(LoginRequest loginRequest) {
+        Admin admin = adminRepository.findByUsername(loginRequest.getUsername()).orElseThrow(() -> new GongguiljeongException(ExceptionCode.ADMIN_NOT_FOUND));
+        if (!passwordEncoder.matches(loginRequest.getPassword(), admin.getPassword())) {
+            throw new GongguiljeongException(ExceptionCode.ADMIN_NOT_FOUND);
+        }
+        return admin;
     }
 }

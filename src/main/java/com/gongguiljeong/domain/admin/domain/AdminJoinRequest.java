@@ -13,7 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class AdminJoinRequest {
 
     @NotBlank
-    private final String loginId;
+    private final String username;
 
     @NotBlank
     private final String password;
@@ -28,6 +28,6 @@ public class AdminJoinRequest {
     private final Long brandId;
 
     public Admin toEntity(Brand brand, BCryptPasswordEncoder passwordEncoder) {
-        return new Admin(brand, name, loginId,  passwordEncoder.encode(password), email);
+        return new Admin(brand, name, username,  passwordEncoder.encode(password), email);
     }
 }

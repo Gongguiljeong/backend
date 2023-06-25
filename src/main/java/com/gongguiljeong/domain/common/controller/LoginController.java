@@ -1,0 +1,96 @@
+package com.gongguiljeong.domain.common.controller;
+
+import com.gongguiljeong.domain.admin.domain.Admin;
+import com.gongguiljeong.domain.admin.domain.LoginRequest;
+import com.gongguiljeong.domain.admin.service.AdminService;
+import com.gongguiljeong.domain.brand.domain.Brand;
+import com.gongguiljeong.domain.brand.service.BrandService;
+import com.gongguiljeong.domain.common.domain.AuthenticationEntity;
+import com.gongguiljeong.domain.user.domain.KakaoProfile;
+import com.gongguiljeong.domain.user.domain.User;
+import com.gongguiljeong.domain.user.service.KakaoService;
+import com.gongguiljeong.domain.user.service.UserService;
+import com.gongguiljeong.global.jwt.JwtProvider;
+import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.time.Duration;
+
+@RestController
+@RequiredArgsConstructor
+public class LoginController {
+    private final AdminService adminService;
+    private final BrandService brandService;
+    private final UserService userService;
+    private final KakaoService kakaoService;
+    private final JwtProvider jwtProvider;
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest) {
+        if (loginRequest.getId() == 1) {
+            Admin admin = adminService.login(loginRequest);
+            AuthenticationEntity authenticationEntity = new AuthenticationEntity(admin.getId(), admin.getRole());
+            String accessToken = jwtProvider.createAccessToken(authenticationEntity);
+            String refreshToken = jwtProvider.createRefreshToken(authenticationEntity);
+            ResponseCookie refreshTokenCookie = getRefreshTokenCookie(refreshToken);
+            return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString()).header(HttpHeaders.AUTHORIZATION, accessToken).build();
+        }
+
+        if (loginRequest.getId() == 2) {
+            Brand brand = brandService.login(loginRequest);
+            AuthenticationEntity authenticationEntity = new AuthenticationEntity(brand.getId(), brand.getRole());
+            String accessToken = jwtProvider.createAccessToken(authenticationEntity);
+            String refreshToken = jwtProvider.createRefreshToken(authenticationEntity);
+            ResponseCookie refreshTokenCookie = getRefreshTokenCookie(refreshToken);
+            return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString()).header(HttpHeaders.AUTHORIZATION, accessToken).build();
+        }
+        return ResponseEntity.badRequest().body("로그인 실패");
+    }
+
+    @GetMapping("/kakao")
+    public void login(HttpServletResponse response) throws IOException {
+        response.sendRedirect("https://kauth.kakao.com/oauth/authorize?client_id=c78d60a3b466b1b1c743a2bb745a1731&redirect_uri=http://localhost:8080/user/kakao/callback&response_type=code");
+    }
+
+    @GetMapping("/users/kakao/callback")
+    public ResponseEntity<?> kakaoLogin(@RequestParam(value = "code") String code) throws URISyntaxException {
+        KakaoProfile kakaoProfile = kakaoService.getInfo(code);
+        User user = userService.login(kakaoProfile);
+        AuthenticationEntity authenticationEntity = new AuthenticationEntity(user.getId(), user.getRole());
+        String accessToken = jwtProvider.createAccessToken(authenticationEntity);
+        String refreshToken = jwtProvider.createRefreshToken(authenticationEntity);
+        ResponseCookie refreshTokenCookie = getRefreshTokenCookie(refreshToken);
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString()).header(HttpHeaders.AUTHORIZATION, accessToken).build();
+    }
+
+    @Operation(summary = "리프레쉬 토큰 검증하고 엑세스토큰 반환")
+    @PostMapping("/refresh")
+    public ResponseEntity<?> getInfo(@CookieValue(value = "refreshToken") Cookie cookie) {
+        String refreshToken = cookie.getValue();
+        if (jwtProvider.validateRefreshToken(refreshToken)) {
+            AuthenticationEntity authenticationEntity = jwtProvider.refreshTokenVerify(refreshToken);
+            String accessToken = jwtProvider.createAccessToken(authenticationEntity);
+            refreshToken = jwtProvider.createRefreshToken(authenticationEntity);
+            ResponseCookie refreshTokenCookie = getRefreshTokenCookie(refreshToken);
+            return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString()).header(HttpHeaders.AUTHORIZATION, accessToken).build();
+        }
+        return ResponseEntity.badRequest().body("refreshtoken 없음");
+    }
+
+    private static ResponseCookie getRefreshTokenCookie(String refreshToken) {
+        return ResponseCookie.from("refreshToken", refreshToken).maxAge(Duration.ofDays(14)).path("/")
+//                .secure(true) //https를 쓸때 사용
+//                .sameSite("None") //csrf 공격을 방지하기 위해 설정
+//                .domain("localhost:3000") // 도메인이 다르면 쿠키를 못받는다.
+                .httpOnly(true).build();
+    }
+}

@@ -1,6 +1,7 @@
 package com.gongguiljeong.domain.common.controller;
 
 
+import com.gongguiljeong.domain.common.domain.exception.GongguiljeongException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -15,13 +16,11 @@ import java.util.Map;
 public class GlobalExceptionController {
 
 
-    //일단 RuntimeException으로 처리되는지 해봄
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<?> exceptionHandler(RuntimeException e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
+    @ExceptionHandler(GongguiljeongException.class)
+    public ResponseEntity<?> exceptionHandler(GongguiljeongException exception) {
+        return ResponseEntity.status(exception.getExceptionCode().getStatus()).body(exception.getExceptionCode());
     }
 
-    //Validation 에러
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> validation(MethodArgumentNotValidException e) {
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
