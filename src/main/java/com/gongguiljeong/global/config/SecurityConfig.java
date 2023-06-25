@@ -1,9 +1,9 @@
 package com.gongguiljeong.global.config;
 
-import com.gongguiljeong.domain.admin.model.Role;
 import com.gongguiljeong.global.jwt.JwtAuthenticationFilter;
 import com.gongguiljeong.global.jwt.JwtAuthorizationFilter;
-import com.gongguiljeong.global.util.CustomResponse;
+import com.gongguiljeong.global.jwt.JwtProvider;
+import com.gongguiljeong.global.util.SecurityResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +15,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -25,19 +24,17 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @RequiredArgsConstructor
 @Slf4j
 public class SecurityConfig {
+    private final JwtProvider jwtProvider;
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-
+    @RequiredArgsConstructor
     public static class CustomSecurityFilterManager extends AbstractHttpConfigurer<CustomSecurityFilterManager, HttpSecurity> {
+        private final JwtProvider jwtProvider;
+
         @Override
         public void configure(HttpSecurity http) {
             AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
-            http.addFilter(new JwtAuthenticationFilter(authenticationManager));
-            http.addFilter(new JwtAuthorizationFilter(authenticationManager));
+            http.addFilter(new JwtAuthenticationFilter(authenticationManager, jwtProvider));
+            http.addFilter(new JwtAuthorizationFilter(authenticationManager, jwtProvider));
         }
     }
 
@@ -50,35 +47,17 @@ public class SecurityConfig {
         http.formLogin(AbstractHttpConfigurer::disable);
         http.csrf(AbstractHttpConfigurer::disable);
         http.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
-
         //필터적용
-        http.apply(new CustomSecurityFilterManager());
-
-
+        http.apply(new CustomSecurityFilterManager(jwtProvider));
         //인증 실패  유요한 토큰을 가지고 있는지
-        http.exceptionHandling(configurer -> configurer.authenticationEntryPoint((request, response, accessDeniedException) -> CustomResponse.unAuthentication(response, "로그인이 필요합니다.")));
+        http.exceptionHandling(configurer -> configurer.authenticationEntryPoint((request, response, accessDeniedException) -> SecurityResponse.unAuthentication(response)));
 
         //권한 실패  hasRole
-        http.exceptionHandling(configurer -> configurer.accessDeniedHandler((request, response, accessDeniedException) -> CustomResponse.forbidden(response)));
+        http.exceptionHandling(configurer -> configurer.accessDeniedHandler((request, response, accessDeniedException) -> SecurityResponse.forbidden(response)));
         http.authorizeHttpRequests(authorize -> authorize.requestMatchers(HttpMethod.GET, "/admins").authenticated().anyRequest().permitAll());
         return http.build();
     }
 
 
-    @Bean
-    public CorsConfigurationSource configurationSource() {
-        CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.addAllowedOriginPattern("*");
-        corsConfig.addAllowedHeader("*");
-        corsConfig.addAllowedMethod("*");
-//        corsConfig.setAllowedMethods(Arrays.asList("GET","POST"));
-//        corsConfig.setAllowedOrigins(Arrays.asList("https://example.com"));
-//        corsConfig.setAllowedHeaders(List.of("Authorization"));
-        corsConfig.addExposedHeader(HttpHeaders.AUTHORIZATION);
-        corsConfig.setAllowCredentials(true);
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", corsConfig);
-        return source;
-    }
 
 }

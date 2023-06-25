@@ -1,8 +1,8 @@
 package com.gongguiljeong.domain.category.service;
 
 
-import com.gongguiljeong.domain.category.dto.MainCategoryCreateRequest;
 import com.gongguiljeong.domain.category.repository.MainCategoryRepository;
+import com.gongguiljeong.domain.category.domain.MainCategoryCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

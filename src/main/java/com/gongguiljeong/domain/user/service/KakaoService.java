@@ -1,7 +1,8 @@
 package com.gongguiljeong.domain.user.service;
 
-import com.gongguiljeong.domain.user.dto.KakaoProfile;
-import com.gongguiljeong.domain.user.dto.KakaoToken;
+import com.gongguiljeong.domain.user.domain.KakaoProfile;
+import com.gongguiljeong.domain.user.domain.KakaoToken;
+import com.gongguiljeong.domain.user.repository.KakaoClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

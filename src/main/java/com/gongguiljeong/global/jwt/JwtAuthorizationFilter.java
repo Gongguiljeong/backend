@@ -1,6 +1,6 @@
 package com.gongguiljeong.global.jwt;
 
-import com.gongguiljeong.global.base_model.UserAdmin;
+import com.gongguiljeong.domain.common.domain.UserAdmin;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,15 +19,17 @@ import java.io.IOException;
 @Slf4j
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
+    private final JwtProvider jwtProvider;
 
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager) {
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, JwtProvider jwtProvider) {
         super(authenticationManager);
+        this.jwtProvider = jwtProvider;
     }
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         log.info("jwt 인가 필터");
-        JwtProvider jwtProvider = new JwtProvider();
         String accessToken = resolveToken(request);
         log.info("accessToken : {}", accessToken);
         if (StringUtils.hasText(accessToken) && jwtProvider.validateAccessToken(accessToken)) {

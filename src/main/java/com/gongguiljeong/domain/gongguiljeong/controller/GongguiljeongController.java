@@ -1,8 +1,8 @@
 package com.gongguiljeong.domain.gongguiljeong.controller;
 
 
-import com.gongguiljeong.domain.gongguiljeong.dto.GongguiljeongCreateRequest;
-import com.gongguiljeong.domain.gongguiljeong.dto.GongguiljeongResponse;
+import com.gongguiljeong.domain.gongguiljeong.domain.GongguiljeongCreateRequest;
+import com.gongguiljeong.domain.gongguiljeong.domain.GongguiljeongResponse;
 import com.gongguiljeong.domain.gongguiljeong.service.GongguiljeongService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

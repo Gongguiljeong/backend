@@ -1,15 +1,15 @@
 package com.gongguiljeong.domain.admin.service;
 
 
-import com.gongguiljeong.domain.admin.dto.AdminJoinRequest;
-import com.gongguiljeong.domain.admin.dto.AdminResponse;
-import com.gongguiljeong.domain.admin.exception.AlreadyExistAdminException;
-import com.gongguiljeong.domain.admin.model.Admin;
+import com.gongguiljeong.domain.admin.domain.AdminResponse;
+import com.gongguiljeong.domain.admin.domain.Admin;
 import com.gongguiljeong.domain.admin.repository.AdminRepository;
-import com.gongguiljeong.domain.brand.exception.BrandNotFoundException;
-import com.gongguiljeong.domain.brand.model.Brand;
+import com.gongguiljeong.domain.brand.domain.exception.BrandNotFoundException;
+import com.gongguiljeong.domain.brand.domain.Brand;
 import com.gongguiljeong.domain.brand.repository.BrandRepository;
-import com.gongguiljeong.domain.gongguiljeong.service.AdminNotFoundException;
+import com.gongguiljeong.domain.admin.domain.AdminJoinRequest;
+import com.gongguiljeong.domain.admin.domain.exception.AlreadyExistAdminException;
+import com.gongguiljeong.domain.gongguiljeong.domain.exception.AdminNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

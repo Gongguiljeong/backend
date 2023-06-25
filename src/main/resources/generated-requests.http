@@ -39,8 +39,6 @@ Content-Type: application/json
   "name": "푸드"
 }
 
-<> 2023-05-29T141547.400.json
-<> 2023-05-29T141505.400.json
 
 ### 서브 카테고리 생성
 POST {{host}}/subCategories
@@ -51,20 +49,13 @@ Content-Type: application/json
   "mainCategoryId" : 1
 }
 
-<> 2023-05-29T141642.400.json
 
 
 ###
 GET {{host}}/brands/1
 Content-Type: application/json
 
-<> 2023-05-29T224536.401.json
-<> 2023-05-29T224530.401.json
-<> 2023-05-29T224525.401.json
-<> 2023-05-29T224512.401.json
-<> 2023-05-29T224511.401.json
-<> 2023-05-29T224510.401.json
-<> 2023-05-29T224507.401.json
+
 ###
 PUT {{host}}/brands/{{id}}
 

@@ -1,12 +1,10 @@
 package com.gongguiljeong.domain.influencer.controller;
 
 
-import com.gongguiljeong.domain.influencer.dto.InfluencerCreateRequest;
 import com.gongguiljeong.domain.influencer.dto.InfluencerResponse;
-import com.gongguiljeong.domain.influencer.model.Influencer;
+import com.gongguiljeong.domain.influencer.dto.InfluencerCreateRequest;
 import com.gongguiljeong.domain.influencer.service.InfluencerService;
 import jakarta.validation.Valid;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,14 +1,12 @@
 package com.gongguiljeong.domain.category.service;
 
 
-import com.gongguiljeong.domain.category.dto.SubCategoryCreateRequest;
-import com.gongguiljeong.domain.category.exception.MainCategoryNotFoundException;
-import com.gongguiljeong.domain.category.model.MainCategory;
+import com.gongguiljeong.domain.category.domain.exception.MainCategoryNotFoundException;
+import com.gongguiljeong.domain.category.domain.MainCategory;
 import com.gongguiljeong.domain.category.repository.MainCategoryRepository;
 import com.gongguiljeong.domain.category.repository.SubCategoryRepository;
-import jakarta.validation.Valid;
+import com.gongguiljeong.domain.category.domain.SubCategoryCreateRequest;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.validator.internal.util.stereotypes.ThreadSafe;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

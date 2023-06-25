@@ -1,14 +1,12 @@
 package com.gongguiljeong.domain.user.service;
 
-import com.gongguiljeong.domain.user.dto.KakaoProfile;
-import com.gongguiljeong.domain.user.model.Gender;
-import com.gongguiljeong.domain.user.model.User;
+import com.gongguiljeong.domain.user.domain.KakaoProfile;
+import com.gongguiljeong.domain.user.domain.Gender;
+import com.gongguiljeong.domain.user.domain.User;
 import com.gongguiljeong.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.io.IOException;
 
 @Service
 @Transactional(readOnly = true)

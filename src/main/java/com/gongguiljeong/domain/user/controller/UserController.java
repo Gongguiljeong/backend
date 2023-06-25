@@ -1,11 +1,11 @@
 package com.gongguiljeong.domain.user.controller;
 
 
-import com.gongguiljeong.domain.user.dto.KakaoProfile;
-import com.gongguiljeong.domain.user.model.User;
+import com.gongguiljeong.domain.user.domain.KakaoProfile;
+import com.gongguiljeong.domain.user.domain.User;
 import com.gongguiljeong.domain.user.service.KakaoService;
 import com.gongguiljeong.domain.user.service.UserService;
-import com.gongguiljeong.global.base_model.UserAdmin;
+import com.gongguiljeong.domain.common.domain.UserAdmin;
 import com.gongguiljeong.global.jwt.JwtProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.Cookie;
@@ -29,6 +29,7 @@ public class UserController {
 
     private final UserService userService;
     private final KakaoService kakaoService;
+    private final JwtProvider jwtProvider;
 
     @GetMapping("/kakao")
     public void login(HttpServletResponse response) throws IOException {
@@ -36,11 +37,10 @@ public class UserController {
     }
     @GetMapping("/kakao/callback")
     public ResponseEntity<?> kakaoLogin(@RequestParam(value = "code") String code) throws URISyntaxException {
-        JwtProvider jwt = new JwtProvider();
         KakaoProfile kakaoProfile = kakaoService.getInfo(code);
         User user = userService.login(kakaoProfile);
-        String accessToken = jwt.createAccessToken(user);
-        String refreshToken = jwt.createRefreshToken(user);
+        String accessToken = jwtProvider.createAccessToken(user);
+        String refreshToken = jwtProvider.createRefreshToken(user);
         ResponseCookie refreshTokenCookie = getRefreshTokenCookie(refreshToken);
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString()).header(HttpHeaders.AUTHORIZATION, accessToken).build();
     }
@@ -50,7 +50,6 @@ public class UserController {
     @PostMapping("/refresh")
     public ResponseEntity<?> getInfo(HttpServletRequest request, HttpServletResponse response, @CookieValue(value = "refreshToken") Cookie refresh) {
         Cookie[] cookies = request.getCookies();
-        JwtProvider jwtProvider = new JwtProvider();
         String refreshToken = getRefreshToken(cookies);
         if (jwtProvider.validateRefreshToken(refreshToken)) {
             UserAdmin userAdmin = jwtProvider.refreshTokenVerify(refreshToken);

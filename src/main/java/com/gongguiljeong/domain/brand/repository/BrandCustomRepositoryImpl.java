@@ -1,10 +1,10 @@
 package com.gongguiljeong.domain.brand.repository;
 
 
-import com.gongguiljeong.domain.brand.dto.BrandResponse;
-import com.gongguiljeong.domain.brand.dto.BrandSearchCondition;
+import com.gongguiljeong.domain.brand.domain.BrandResponse;
+import com.gongguiljeong.domain.brand.domain.BrandSearchCondition;
 import com.gongguiljeong.domain.brand.dto.QBrandResponse;
-import com.gongguiljeong.global.base_model.Used;
+import com.gongguiljeong.domain.common.domain.Used;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-import static com.gongguiljeong.domain.brand.model.QBrand.brand;
+import static com.gongguiljeong.domain.brand.domain.QBrand.brand;
 
 @RequiredArgsConstructor
 public class BrandCustomRepositoryImpl implements BrandCustomRepository {

@@ -1,9 +1,9 @@
 package com.gongguiljeong.global.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gongguiljeong.domain.admin.dto.AdminLoginRequest;
-import com.gongguiljeong.domain.admin.model.Admin;
-import com.gongguiljeong.global.util.CustomResponse;
+import com.gongguiljeong.domain.admin.domain.AdminLoginRequest;
+import com.gongguiljeong.domain.admin.domain.Admin;
+import com.gongguiljeong.global.util.SecurityResponse;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,12 +19,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import java.io.IOException;
 import java.time.Duration;
 
+
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
+    private final JwtProvider jwtProvider;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtProvider jwtProvider) {
         super(authenticationManager);
+        this.jwtProvider = jwtProvider;
         this.authenticationManager = authenticationManager;
     }
 
@@ -42,12 +45,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException {
-        CustomResponse.unAuthentication(response, "로그인 실패 ");
+        SecurityResponse.unAuthentication(response);
     }
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException {
-        JwtProvider jwtProvider = new JwtProvider();
         Admin admin = (Admin) authResult.getPrincipal();
         String jwtToken = jwtProvider.createAccessToken(admin);
         String refreshToken = jwtProvider.createRefreshToken(admin);
@@ -62,7 +64,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .build();
         response.setHeader("Set-Cookie", cookie.toString());
         AdminLoginRequest adminLoginRequest = new AdminLoginRequest(admin);
-        CustomResponse.success(response, adminLoginRequest);
+        SecurityResponse.success(response, adminLoginRequest);
 
     }
 }

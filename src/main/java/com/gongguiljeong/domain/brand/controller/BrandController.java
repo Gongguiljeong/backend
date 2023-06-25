@@ -1,10 +1,10 @@
 package com.gongguiljeong.domain.brand.controller;
 
 
-import com.gongguiljeong.domain.brand.dto.BrandCreateRequest;
-import com.gongguiljeong.domain.brand.dto.BrandResponse;
-import com.gongguiljeong.domain.brand.dto.BrandSearchCondition;
-import com.gongguiljeong.domain.brand.dto.BrandUpdateRequest;
+import com.gongguiljeong.domain.brand.domain.BrandCreateRequest;
+import com.gongguiljeong.domain.brand.domain.BrandResponse;
+import com.gongguiljeong.domain.brand.domain.BrandSearchCondition;
+import com.gongguiljeong.domain.brand.domain.BrandUpdateRequest;
 import com.gongguiljeong.domain.brand.service.BrandService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;

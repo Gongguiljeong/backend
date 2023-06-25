@@ -1,7 +1,7 @@
 package com.gongguiljeong.domain.influencer.model;
 
 
-import com.gongguiljeong.global.base_model.BaseEntity;
+import com.gongguiljeong.domain.common.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

@@ -1,14 +1,13 @@
 package com.gongguiljeong.domain.brand.service;
 
 
-import com.gongguiljeong.domain.brand.dto.BrandCreateRequest;
-import com.gongguiljeong.domain.brand.dto.BrandResponse;
-import com.gongguiljeong.domain.brand.dto.BrandSearchCondition;
-import com.gongguiljeong.domain.brand.dto.BrandUpdateRequest;
-import com.gongguiljeong.domain.brand.exception.AlreadyDeletedBrandException;
-import com.gongguiljeong.domain.brand.exception.BrandNotFoundException;
-import com.gongguiljeong.domain.brand.model.Brand;
+import com.gongguiljeong.domain.brand.domain.BrandCreateRequest;
+import com.gongguiljeong.domain.brand.domain.BrandSearchCondition;
+import com.gongguiljeong.domain.brand.domain.BrandUpdateRequest;
+import com.gongguiljeong.domain.brand.domain.exception.BrandNotFoundException;
 import com.gongguiljeong.domain.brand.repository.BrandCustomRepositoryImpl;
+import com.gongguiljeong.domain.brand.domain.BrandResponse;
+import com.gongguiljeong.domain.brand.domain.Brand;
 import com.gongguiljeong.domain.brand.repository.BrandRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

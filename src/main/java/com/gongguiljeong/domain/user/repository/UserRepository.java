@@ -1,7 +1,7 @@
 package com.gongguiljeong.domain.user.repository;
 
 
-import com.gongguiljeong.domain.user.model.User;
+import com.gongguiljeong.domain.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

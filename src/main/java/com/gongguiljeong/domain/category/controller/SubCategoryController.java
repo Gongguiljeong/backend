@@ -1,9 +1,7 @@
 package com.gongguiljeong.domain.category.controller;
 
 
-import com.gongguiljeong.domain.category.dto.MainCategoryCreateRequest;
-import com.gongguiljeong.domain.category.dto.SubCategoryCreateRequest;
-import com.gongguiljeong.domain.category.service.MainCategoryService;
+import com.gongguiljeong.domain.category.domain.SubCategoryCreateRequest;
 import com.gongguiljeong.domain.category.service.SubCategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

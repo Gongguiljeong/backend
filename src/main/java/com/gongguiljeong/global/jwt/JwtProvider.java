@@ -4,19 +4,25 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.gongguiljeong.domain.admin.model.Admin;
-import com.gongguiljeong.domain.admin.model.Role;
-import com.gongguiljeong.global.base_model.UserAdmin;
+import com.gongguiljeong.domain.admin.domain.Admin;
+import com.gongguiljeong.domain.admin.domain.Role;
+import com.gongguiljeong.domain.common.domain.UserAdmin;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.Date;
 
 
+@Component
 public class JwtProvider {
 
 
-    private final String ACCESS_TOKEN_SECRET_KEY = "7b190110066d09a1f88c5970fa55d5c2a61e52a2e4b984c7704966ab6bebad9791b5984136695239a67d98027ebcea2f36ba00ce628c662d7e0d43b5066d6567";
-    private final String REFRESH_TOKEN_SECRET_KEY = "8937d7116cd6b9f184586f367e596d44661d838421db2fc23f7be1355df04d50838c9fbec843ef67cfe5856da75559ff69e48c3e6e00652f448fb975cc1c46d4";
+    @Value("${jwt.access.secret}")
+    private String ACCESS_TOKEN_SECRET_KEY;
+
+    @Value("${jwt.refresh.secret}")
+    private String REFRESH_TOKEN_SECRET_KEY;
     private static final long ACCESS_TOKEN_EXPIRATION_TIME = Duration.ofDays(1).toMillis();
     private static final long REFRESH_TOKEN_EXPIRATION_TIME = Duration.ofDays(14).toMillis();
     public static final String PREFIX = "Bearer ";
@@ -68,7 +74,6 @@ public class JwtProvider {
 //            throw new RuntimeException("토큰 만료");
 //        }
 //    }
-
 
 
 }

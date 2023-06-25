@@ -5,33 +5,25 @@ server:
       charset: UTF-8
       enabled: true
       force: true
-#  error:
-#    whitelabel:
-#      enabled: false
 
 spring:
   servlet:
     multipart:
       enabled: true
-      max-file-size: 100MB
-      max-request-size: 100MB
+      max-file-size: 20MB
+      max-request-size: 20MB
 
   datasource:
-    url: jdbc:mysql://localhost:3306/gongguiljeong?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: root
-    password: 1234
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  #    hikari:
-  #      connection-timeout: 3000
-  #      validation-timeout: 3000
-  #      minimum-idle: 5
-  #      maximum-pool-size: 20
-  #      idle-timeout: 200000
-  #      max-lifetime: 240000
-  #      pool-name: hikari_pool
+    url: jdbc:h2:mem:test;MODE=MySQL
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create
     properties:
       hibernate:
         default_batch_fetch_size: 10
@@ -45,14 +37,9 @@ spring:
       pageable:
         default-page-size: 100
         max-page-size: 2000
-        one-indexed-parameters: on # paging 1부터 시작하기
+        one-indexed-parameters: on
 
 logging.level:
-  #  root: info
-  #  org.springframework:
-  #    web: info
-  #    security: info
-  #    boot: info
   org.hibernate.SQL: debug
   org.hibernate.type: trace
 
@@ -70,19 +57,12 @@ springdoc:
     path: /ui
     operations-sorter: alpha, method
     tags-sorter: alpha, method
-#로깅 파일
-#logging:
-#  file:
-#    name: ./logs/log.log
-#org.hibernate.type: trace
-
 
 kakao:
   restApiKey: c78d60a3b466b1b1c743a2bb745a1731
   redirectUrl: http://localhost:8080/user/kakao/callback
   tokenUrl: https://kauth.kakao.com/oauth/token
   userInfoUrl: https://kapi.kakao.com/v2/user/me
-
 
 jwt:
   refresh:
