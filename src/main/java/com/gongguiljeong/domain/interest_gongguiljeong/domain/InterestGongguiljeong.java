@@ -1,4 +1,4 @@
-package com.gongguiljeong.domain.interest_gongguiljeong.model;
+package com.gongguiljeong.domain.interest_gongguiljeong.domain;
 
 import com.gongguiljeong.domain.gongguiljeong.domain.Gongguiljeong;
 import com.gongguiljeong.domain.user.domain.User;

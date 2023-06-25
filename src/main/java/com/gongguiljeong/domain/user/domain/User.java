@@ -16,6 +16,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Table(name = "users")
 public class User extends BaseEntity implements UserAdmin {
 
     @Id
@@ -30,20 +31,10 @@ public class User extends BaseEntity implements UserAdmin {
     private String email;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "ENUM('F','M', 'N')")
     private Gender gender;
 
     private String age;
 
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public Role getRole() {
-        return Role.USER;
-    }
 
     public User(String name, String email, Gender gender, String age) {
         this.name = name;
@@ -55,6 +46,15 @@ public class User extends BaseEntity implements UserAdmin {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(getRole().name()));
+    }
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public Role getRole() {
+        return Role.USER;
     }
 
     @Override

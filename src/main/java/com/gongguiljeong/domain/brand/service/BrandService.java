@@ -1,14 +1,11 @@
 package com.gongguiljeong.domain.brand.service;
 
 
-import com.gongguiljeong.domain.brand.domain.BrandCreateRequest;
-import com.gongguiljeong.domain.brand.domain.BrandSearchCondition;
-import com.gongguiljeong.domain.brand.domain.BrandUpdateRequest;
-import com.gongguiljeong.domain.brand.domain.exception.BrandNotFoundException;
+import com.gongguiljeong.domain.brand.domain.*;
 import com.gongguiljeong.domain.brand.repository.BrandCustomRepositoryImpl;
-import com.gongguiljeong.domain.brand.domain.BrandResponse;
-import com.gongguiljeong.domain.brand.domain.Brand;
 import com.gongguiljeong.domain.brand.repository.BrandRepository;
+import com.gongguiljeong.domain.common.domain.exception.ExceptionCode;
+import com.gongguiljeong.domain.common.domain.exception.GongguiljeongException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -44,12 +41,12 @@ public class BrandService {
 //    }
     @Transactional
     public void updateBrand(Long id, BrandUpdateRequest brandUpdateRequest) {
-        Brand brand = brandRepository.findById(id).orElseThrow(BrandNotFoundException::new);
+        Brand brand = brandRepository.findById(id).orElseThrow(() -> new GongguiljeongException(ExceptionCode.BRAND_NOT_FOUND));
         brand.update(brandUpdateRequest);
     }
 
     public BrandResponse readBrand(Long id) {
-        Brand brand = brandRepository.findById(id).orElseThrow(BrandNotFoundException::new);
+        Brand brand = brandRepository.findById(id).orElseThrow(() -> new GongguiljeongException(ExceptionCode.BRAND_NOT_FOUND));
         return new BrandResponse(brand);
     }
 

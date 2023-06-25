@@ -1,15 +1,14 @@
 package com.gongguiljeong.domain.admin.service;
 
 
-import com.gongguiljeong.domain.admin.domain.AdminResponse;
 import com.gongguiljeong.domain.admin.domain.Admin;
+import com.gongguiljeong.domain.admin.domain.AdminJoinRequest;
+import com.gongguiljeong.domain.admin.domain.AdminResponse;
 import com.gongguiljeong.domain.admin.repository.AdminRepository;
-import com.gongguiljeong.domain.brand.domain.exception.BrandNotFoundException;
 import com.gongguiljeong.domain.brand.domain.Brand;
 import com.gongguiljeong.domain.brand.repository.BrandRepository;
-import com.gongguiljeong.domain.admin.domain.AdminJoinRequest;
-import com.gongguiljeong.domain.admin.domain.exception.AlreadyExistAdminException;
-import com.gongguiljeong.domain.gongguiljeong.domain.exception.AdminNotFoundException;
+import com.gongguiljeong.domain.common.domain.exception.ExceptionCode;
+import com.gongguiljeong.domain.common.domain.exception.GongguiljeongException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,20 +30,20 @@ public class AdminService {
     public void join(AdminJoinRequest adminJoinRequest) {
         boolean existAdmin = adminRepository.existsByLoginId(adminJoinRequest.getLoginId());
         if (existAdmin) {
-            throw new AlreadyExistAdminException();
+            throw new GongguiljeongException(ExceptionCode.BRAND_ALREADY_EXIST);
         }
 
         existAdmin = adminRepository.existsByEmail(adminJoinRequest.getEmail());
         if (existAdmin) {
-            throw new AlreadyExistAdminException();
+            throw new GongguiljeongException(ExceptionCode.BRAND_ALREADY_EXIST);
         }
 
-        Brand brand = brandRepository.findById(adminJoinRequest.getBrandId()).orElseThrow(BrandNotFoundException::new);
+        Brand brand = brandRepository.findById(adminJoinRequest.getBrandId()).orElseThrow( () -> new GongguiljeongException(ExceptionCode.BRAND_NOT_FOUND));
         adminRepository.save(adminJoinRequest.toEntity(brand, passwordEncoder));
     }
 
     public AdminResponse readAdmin(Long id) {
-        Admin admin = adminRepository.findById(id).orElseThrow(AdminNotFoundException::new);
+        Admin admin = adminRepository.findById(id).orElseThrow(() -> new GongguiljeongException(ExceptionCode.ADMIN_NOT_FOUND));
         return new AdminResponse(admin);
     }
 

@@ -3,7 +3,7 @@ package com.gongguiljeong.domain.brand.repository;
 
 import com.gongguiljeong.domain.brand.domain.BrandResponse;
 import com.gongguiljeong.domain.brand.domain.BrandSearchCondition;
-import com.gongguiljeong.domain.brand.dto.QBrandResponse;
+import com.gongguiljeong.domain.brand.domain.QBrandResponse;
 import com.gongguiljeong.domain.common.domain.Used;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;

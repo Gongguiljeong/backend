@@ -1,7 +1,6 @@
-package com.gongguiljeong.global.exception;
+package com.gongguiljeong.domain.common.controller;
 
 
-import com.gongguiljeong.global.dto.ResponseDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -15,11 +14,11 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionController {
 
-    
+
     //일단 RuntimeException으로 처리되는지 해봄
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<?> exceptionHandler(RuntimeException e) {
-        return ResponseEntity.badRequest().body(new ResponseDto<>(-1, e.getMessage(), null));
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 
     //Validation 에러
@@ -30,6 +29,6 @@ public class GlobalExceptionController {
         for (FieldError fieldError : fieldErrors) {
             map.put(fieldError.getField(), fieldError.getDefaultMessage());
         }
-        return ResponseEntity.badRequest().body(new ResponseDto<>(-1, "유효성 검사", map));
+        return ResponseEntity.badRequest().body(map);
     }
 }

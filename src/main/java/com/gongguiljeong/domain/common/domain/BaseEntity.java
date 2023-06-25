@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 public class BaseEntity {
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "ENUM('Y','N')", nullable = false)
     protected Used used = Used.Y;
 
     @CreatedDate
