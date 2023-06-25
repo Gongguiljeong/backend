@@ -1,4 +1,4 @@
-package com.gongguiljeong.domain.influencer.model;
+package com.gongguiljeong.domain.influencer.domain;
 
 
 import com.gongguiljeong.domain.common.domain.BaseEntity;
@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Table(name = "influencers")
 public class Influencer extends BaseEntity {
 
     @Id

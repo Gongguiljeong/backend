@@ -1,8 +1,8 @@
 package com.gongguiljeong.domain.influencer.controller;
 
 
-import com.gongguiljeong.domain.influencer.dto.InfluencerResponse;
-import com.gongguiljeong.domain.influencer.dto.InfluencerCreateRequest;
+import com.gongguiljeong.domain.influencer.domain.InfluencerResponse;
+import com.gongguiljeong.domain.influencer.domain.InfluencerCreateRequest;
 import com.gongguiljeong.domain.influencer.service.InfluencerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,20 +19,20 @@ public class InfluencerController {
 
 
     @PostMapping("")
-    public ResponseEntity<?> createInfluencer(@Valid @RequestBody InfluencerCreateRequest influencerCreateRequest) {
-        influencerService.createInfluencer(influencerCreateRequest);
+    public ResponseEntity<?> create(@Valid @RequestBody InfluencerCreateRequest influencerCreateRequest) {
+        influencerService.create(influencerCreateRequest);
         return ResponseEntity.ok("");
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> readInfluencer(@PathVariable Long id) {
-        InfluencerResponse influencerResponse = influencerService.readInfluencer(id);
+    public ResponseEntity<?> get(@PathVariable Long id) {
+        InfluencerResponse influencerResponse = influencerService.get(id);
         return ResponseEntity.ok(influencerResponse);
     }
 
     @GetMapping("")
-    public ResponseEntity<?> readInfluencerList(Pageable pageable) {
-        Page<InfluencerResponse> influencerResponses = influencerService.readInfluencerList(pageable);
+    public ResponseEntity<?> getList(Pageable pageable) {
+        Page<InfluencerResponse> influencerResponses = influencerService.getList(pageable);
         return ResponseEntity.ok(influencerResponses);
     }
 }

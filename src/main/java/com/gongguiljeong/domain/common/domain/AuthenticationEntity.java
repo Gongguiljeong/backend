@@ -1,7 +1,9 @@
 package com.gongguiljeong.domain.common.domain;
 
 import com.gongguiljeong.domain.admin.domain.Role;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -9,10 +11,11 @@ import java.util.Collection;
 import java.util.List;
 
 @Getter
+@NoArgsConstructor
 public class AuthenticationEntity {
 
-    private final Long id;
-    private final Role role;
+    private  Long id;
+    private  Role role;
 
 
 

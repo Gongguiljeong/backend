@@ -4,13 +4,9 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.gongguiljeong.domain.admin.domain.Admin;
 import com.gongguiljeong.domain.admin.domain.Role;
 import com.gongguiljeong.domain.common.domain.AuthenticationEntity;
-import com.gongguiljeong.domain.common.domain.Member;
-import com.gongguiljeong.domain.common.domain.UserAdmin;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;

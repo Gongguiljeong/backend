@@ -1,5 +1,5 @@
 package com.gongguiljeong.domain.common.domain;
 
-public enum Used {
+public enum Status {
     Y, N, W
 }

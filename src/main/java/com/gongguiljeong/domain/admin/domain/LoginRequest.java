@@ -1,11 +1,8 @@
 package com.gongguiljeong.domain.admin.domain;
 
 
-import com.gongguiljeong.domain.common.domain.Member;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Getter
 @NoArgsConstructor

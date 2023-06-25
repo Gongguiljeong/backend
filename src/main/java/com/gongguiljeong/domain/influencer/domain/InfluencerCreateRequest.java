@@ -1,7 +1,7 @@
-package com.gongguiljeong.domain.influencer.dto;
+package com.gongguiljeong.domain.influencer.domain;
 
 
-import com.gongguiljeong.domain.influencer.model.Influencer;
+import com.gongguiljeong.domain.influencer.domain.Influencer;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

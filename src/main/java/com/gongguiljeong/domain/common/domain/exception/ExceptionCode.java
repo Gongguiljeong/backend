@@ -27,7 +27,21 @@ public enum ExceptionCode {
 
     //ADMIN
     ADMIN_NOT_FOUND(3001, HttpStatus.NOT_FOUND, "관리자를 찾을 수 없습니다."),
-    ADMIN_ALREADY_EXIST(3002, HttpStatus.BAD_REQUEST, "이미 존재하는 관리자입니다.");
+    ADMIN_ALREADY_EXIST(3002, HttpStatus.BAD_REQUEST, "이미 존재하는 관리자입니다."),
+
+
+    //Influencer
+    INFLUENCER_NOT_FOUND(4001, HttpStatus.NOT_FOUND, "인플루언서를 찾을 수 없습니다."),
+    INFLUENCER_ALREADY_EXIST(4002, HttpStatus.BAD_REQUEST, "이미 존재하는 인플루언서입니다."),
+
+
+    //MainCategory
+    MAIN_CATEGORY_NOT_FOUND(5001, HttpStatus.NOT_FOUND, "메인 카테고리를 찾을 수 없습니다."),
+    MAIN_CATEGORY_ALREADY_EXIST(5002, HttpStatus.BAD_REQUEST, "이미 존재하는 메인 카테고리입니다."),
+
+    //SubCategory
+    SUB_CATEGORY_NOT_FOUND(6001, HttpStatus.NOT_FOUND, "서브 카테고리를 찾을 수 없습니다."),
+    SUB_CATEGORY_ALREADY_EXIST(6002, HttpStatus.BAD_REQUEST, "이미 존재하는 서브 카테고리입니다.");
 
     private final int code;
     private final HttpStatus status;

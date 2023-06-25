@@ -4,6 +4,7 @@ package com.gongguiljeong.domain.brand.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Getter
 @RequiredArgsConstructor
@@ -23,11 +24,11 @@ public class BrandJoinRequest {
         this.link = link;
     }
 
-    public Brand toEntity() {
+    public Brand toEntity(BCryptPasswordEncoder passwordEncoder) {
         return Brand.builder()
                 .name(name)
                 .username(username)
-                .password(password)
+                .password(passwordEncoder.encode(password))
                 .email(email)
                 .link(link)
                 .build();

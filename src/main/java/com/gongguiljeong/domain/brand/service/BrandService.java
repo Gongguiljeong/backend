@@ -4,11 +4,11 @@ package com.gongguiljeong.domain.brand.service;
 import com.gongguiljeong.domain.admin.domain.LoginRequest;
 import com.gongguiljeong.domain.brand.domain.Brand;
 import com.gongguiljeong.domain.brand.domain.BrandJoinRequest;
-import com.gongguiljeong.domain.brand.repository.BrandCustomRepositoryImpl;
 import com.gongguiljeong.domain.brand.repository.BrandRepository;
 import com.gongguiljeong.domain.common.domain.exception.ExceptionCode;
 import com.gongguiljeong.domain.common.domain.exception.GongguiljeongException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,15 +17,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class BrandService {
     private final BrandRepository brandRepository;
-    private final BrandCustomRepositoryImpl brandCustomRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Transactional
     public void join(BrandJoinRequest brandCreateRequest) {
-        brandRepository.save(brandCreateRequest.toEntity());
+        brandRepository.save(brandCreateRequest.toEntity(passwordEncoder));
     }
 
 
-    public Brand readBrand(Long id) {
+    public Brand read(Long id) {
         return brandRepository.findById(id).orElseThrow(() -> new GongguiljeongException(ExceptionCode.BRAND_NOT_FOUND));
 
     }

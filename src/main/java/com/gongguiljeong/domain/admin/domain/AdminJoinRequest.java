@@ -24,7 +24,6 @@ public class AdminJoinRequest {
     @NotBlank
     private final String email;
 
-    @Digits(integer = 5, fraction = 0)
     private final Long brandId;
 
     public Admin toEntity(Brand brand, BCryptPasswordEncoder passwordEncoder) {

@@ -1,11 +1,12 @@
 package com.gongguiljeong.domain.category.service;
 
 
-import com.gongguiljeong.domain.category.domain.exception.MainCategoryNotFoundException;
 import com.gongguiljeong.domain.category.domain.MainCategory;
+import com.gongguiljeong.domain.category.domain.SubCategoryCreateRequest;
 import com.gongguiljeong.domain.category.repository.MainCategoryRepository;
 import com.gongguiljeong.domain.category.repository.SubCategoryRepository;
-import com.gongguiljeong.domain.category.domain.SubCategoryCreateRequest;
+import com.gongguiljeong.domain.common.domain.exception.ExceptionCode;
+import com.gongguiljeong.domain.common.domain.exception.GongguiljeongException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +21,7 @@ public class SubCategoryService {
 
     @Transactional
     public void createSubCategory(SubCategoryCreateRequest subcategoryService) {
-        MainCategory mainCategory = mainCategoryRepository.findById(subcategoryService.getMainCategoryId()).orElseThrow(MainCategoryNotFoundException::new);
+        MainCategory mainCategory = mainCategoryRepository.findById(subcategoryService.getMainCategoryId()).orElseThrow(()-> new GongguiljeongException(ExceptionCode.MAIN_CATEGORY_NOT_FOUND));
         subCategoryRepository.save(subcategoryService.toEntity(mainCategory));
     }
 }

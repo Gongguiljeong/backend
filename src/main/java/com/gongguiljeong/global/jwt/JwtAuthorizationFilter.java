@@ -1,7 +1,6 @@
 package com.gongguiljeong.global.jwt;
 
 import com.gongguiljeong.domain.common.domain.AuthenticationEntity;
-import com.gongguiljeong.domain.common.domain.UserAdmin;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -2,7 +2,6 @@ package com.gongguiljeong.domain.common.domain.exception;
 
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
 public class GongguiljeongException extends RuntimeException {

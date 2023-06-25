@@ -5,7 +5,7 @@ import com.gongguiljeong.domain.admin.domain.Admin;
 import com.gongguiljeong.domain.category.domain.MainCategory;
 import com.gongguiljeong.domain.category.domain.SubCategory;
 import com.gongguiljeong.domain.image.domain.MainImage;
-import com.gongguiljeong.domain.influencer.model.Influencer;
+import com.gongguiljeong.domain.influencer.domain.Influencer;
 import com.gongguiljeong.domain.common.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;

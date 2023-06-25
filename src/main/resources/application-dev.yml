@@ -62,7 +62,7 @@ springdoc:
 
 kakao:
   restApiKey: c78d60a3b466b1b1c743a2bb745a1731
-  redirectUrl: http://localhost:8080/user/kakao/callback
+  redirectUrl: http://localhost:8080/users/kakao/callback
   tokenUrl: https://kauth.kakao.com/oauth/token
   userInfoUrl: https://kapi.kakao.com/v2/user/me
 

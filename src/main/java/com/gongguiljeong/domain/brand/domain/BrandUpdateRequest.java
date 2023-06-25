@@ -1,7 +1,7 @@
 package com.gongguiljeong.domain.brand.domain;
 
 
-import com.gongguiljeong.domain.common.domain.Used;
+import com.gongguiljeong.domain.common.domain.Status;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +16,6 @@ public class BrandUpdateRequest {
     private final String link;
 
     @NotBlank
-    private final Used used;
+    private final Status used;
 
 }

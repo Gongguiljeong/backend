@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class BaseEntity {
 
     @Enumerated(EnumType.STRING)
-    protected Used used = Used.Y;
+    protected Status status = Status.Y;
 
     @CreatedDate
     protected LocalDateTime createDate;
@@ -25,14 +25,14 @@ public class BaseEntity {
 
 
     public void delete() {
-        this.used = Used.N;
+        this.status = Status.N;
     }
 
     public void restore() {
-        this.used = Used.Y;
+        this.status = Status.Y;
     }
 
-    public boolean isUsed() {
-        return this.used.equals(Used.Y);
+    public boolean isStatus() {
+        return this.status.equals(Status.Y);
     }
 }
