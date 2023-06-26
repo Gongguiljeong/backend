@@ -1,10 +1,10 @@
--- brand
+-- brand password = kwon
 insert into brands (brand_id, name, username, password, email, link, status, create_date, update_date)
-values (1, 'kwon', 'kwon', '$2a$10$ols0oALJCphdO58Zn5j2r.GIXKZTCsxKQw0XyN17treUmzB9vuJ52', 'kwon@naver.com','www.naver.com', 'Y', now(), now());
+values (1, 'kwon1', 'kwon1', '$2a$10$ols0oALJCphdO58Zn5j2r.GIXKZTCsxKQw0XyN17treUmzB9vuJ52', 'kwon@naver.com','www.naver.com', 'Y', now(), now());
 insert into brands (brand_id, name, username, password, email, link, status, create_date, update_date)
-values (2, 'kwon', 'kwon', '$2a$10$ols0oALJCphdO58Zn5j2r.GIXKZTCsxKQw0XyN17treUmzB9vuJ52', 'kwon@naver.com','www.naver.com', 'Y', now(), now());
+values (2, 'kwon2', 'kwon2', '$2a$10$ols0oALJCphdO58Zn5j2r.GIXKZTCsxKQw0XyN17treUmzB9vuJ52', 'kwon@naver.com','www.naver.com', 'Y', now(), now());
 insert into brands (brand_id, name, username, password, email, link, status, create_date, update_date)
-values (3, 'kwon', 'kwon', '$2a$10$ols0oALJCphdO58Zn5j2r.GIXKZTCsxKQw0XyN17treUmzB9vuJ52', 'kwon@naver.com', 'www.naver.com', 'Y', now(), now());
+values (3, 'kwon3', 'kwon3', '$2a$10$ols0oALJCphdO58Zn5j2r.GIXKZTCsxKQw0XyN17treUmzB9vuJ52', 'kwon@naver.com', 'www.naver.com', 'Y', now(), now());
 
 -- user
 insert into users(user_id, name, email, gender, age,  status, create_date, update_date)
@@ -16,21 +16,21 @@ values(3, '카카오닉네임', 'rldh11113@naver.com', 'M', '30', 'Y', now(), no
 
 
 -- admin
-insert into admins (admin_id, name, username, password, email, brand_id, status, create_date, update_date)
-values (1, 'kwon', 'kwon1', '$2a$10$ols0oALJCphdO58Zn5j2r.GIXKZTCsxKQw0XyN17treUmzB9vuJ52', 'kwon1@naver.com', 1, 'Y', now(), now());
-insert into admins (admin_id, name, username, password, email, brand_id, status, create_date, update_date)
-values (2, 'kwon', 'kwon2', '$2a$10$ols0oALJCphdO58Zn5j2r.GIXKZTCsxKQw0XyN17treUmzB9vuJ52', 'kwon2@naver.com', 1, 'Y', now(), now());
-insert into admins (admin_id, name, username, password, email, brand_id, status, create_date, update_date)
-values (3, 'kwon', 'kwon3', '$2a$10$ols0oALJCphdO58Zn5j2r.GIXKZTCsxKQw0XyN17treUmzB9vuJ52', 'kwon3@naver.com', 1, 'Y', now(), now());
+insert into admins (admin_id, name, username, password, email,status, create_date, update_date)
+values (1, 'kwon1', 'kwon1', '$2a$10$ols0oALJCphdO58Zn5j2r.GIXKZTCsxKQw0XyN17treUmzB9vuJ52', 'kwon1@naver.com', 'Y', now(), now());
+insert into admins (admin_id, name, username, password, email, status, create_date, update_date)
+values (2, 'kwon2', 'kwon2', '$2a$10$ols0oALJCphdO58Zn5j2r.GIXKZTCsxKQw0XyN17treUmzB9vuJ52', 'kwon2@naver.com', 'Y', now(), now());
+insert into admins (admin_id, name, username, password, email, status, create_date, update_date)
+values (3, 'kwon3', 'kwon3', '$2a$10$ols0oALJCphdO58Zn5j2r.GIXKZTCsxKQw0XyN17treUmzB9vuJ52', 'kwon3@naver.com', 'Y', now(), now());
 
 
 -- Influencer
 insert into influencers (influencer_id, name, link, status, create_date, update_date)
-values (1, '김태희', 'www.naver.com', 'Y', now(), now());
+values (1, '김태희1', 'www.naver.com1', 'N', now(), now());
 insert into influencers (influencer_id, name, link, status, create_date, update_date)
-values (2, '김태희', 'www.naver.com', 'Y', now(), now());
+values (2, '김태희2', 'www.naver.com2', 'N', now(), now());
 insert into influencers (influencer_id, name, link, status, create_date, update_date)
-values (3, '김태희', 'www.naver.com', 'Y', now(), now());
+values (3, '김태희3', 'www.naver.com3', 'N', now(), now());
 
 
 -- MainCateogry

@@ -41,7 +41,12 @@ public enum ExceptionCode {
 
     //SubCategory
     SUB_CATEGORY_NOT_FOUND(6001, HttpStatus.NOT_FOUND, "서브 카테고리를 찾을 수 없습니다."),
-    SUB_CATEGORY_ALREADY_EXIST(6002, HttpStatus.BAD_REQUEST, "이미 존재하는 서브 카테고리입니다.");
+    SUB_CATEGORY_ALREADY_EXIST(6002, HttpStatus.BAD_REQUEST, "이미 존재하는 서브 카테고리입니다."),
+
+    GONGGUILJEONG_NOT_FOUND(7001, HttpStatus.NOT_FOUND, "공구일정을 찾을 수 없습니다."),
+    GONGGUILJEONG_ALREADY_EXIST(7002, HttpStatus.BAD_REQUEST, "이미 존재하는 공구일정입니다.");
+
+
 
     private final int code;
     private final HttpStatus status;

@@ -1,7 +1,7 @@
 //package com.gongguiljeong.global.jwt;
 //
 //import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.gongguiljeong.domain.admin.domain.LoginRequest;
+//import com.gongguiljeong.domain.common.domain.LoginRequest;
 //import com.gongguiljeong.domain.admin.domain.Admin;
 //import com.gongguiljeong.domain.common.domain.AuthenticationEntity;
 //import com.gongguiljeong.domain.common.domain.Member;

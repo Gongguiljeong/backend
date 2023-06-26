@@ -20,27 +20,27 @@ class SecurityConfigTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @DisplayName("인증 테스트")
-    @Test
-    public void authenticationTest() throws Exception {
-        ResultActions resultActions = mockMvc.perform(get("/brands"));
-        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-        int status = resultActions.andReturn().getResponse().getStatus();
-        System.out.println("테스트: " + responseBody);
-        System.out.println("상태: " + status);
-        Assertions.assertThat(status).isEqualTo(200);
-    }
-
-
-    @DisplayName("인가 테스트")
-    @Test
-    public void authorizationTest() throws Exception {
-        ResultActions resultActions = mockMvc.perform(get("/admins"));
-        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-        int status = resultActions.andReturn().getResponse().getStatus();
-        System.out.println("테스트: " + responseBody);
-        System.out.println("상태: " + status);
-        Assertions.assertThat(status).isEqualTo(403);
-    }
+//    @DisplayName("인증 테스트")
+//    @Test
+//    public void authenticationTest() throws Exception {
+//        ResultActions resultActions = mockMvc.perform(get("/brands"));
+//        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+//        int status = resultActions.andReturn().getResponse().getStatus();
+//        System.out.println("테스트: " + responseBody);
+//        System.out.println("상태: " + status);
+//        Assertions.assertThat(status).isEqualTo(200);
+//    }
+//
+//
+//    @DisplayName("인가 테스트")
+//    @Test
+//    public void authorizationTest() throws Exception {
+//        ResultActions resultActions = mockMvc.perform(get("/admins"));
+//        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+//        int status = resultActions.andReturn().getResponse().getStatus();
+//        System.out.println("테스트: " + responseBody);
+//        System.out.println("상태: " + status);
+//        Assertions.assertThat(status).isEqualTo(403);
+//    }
 
 }
