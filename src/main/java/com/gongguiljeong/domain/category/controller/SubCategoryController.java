@@ -18,7 +18,7 @@ public class SubCategoryController {
     private final SubCategoryService subcategoryService;
 
     @PostMapping("")
-    public ResponseEntity<?> createSubCategory(@Valid @RequestBody SubCategoryCreateRequest subCategoryCreateRequest) {
+    public ResponseEntity<?> create(@Valid @RequestBody SubCategoryCreateRequest subCategoryCreateRequest) {
         subcategoryService.createSubCategory(subCategoryCreateRequest);
         return ResponseEntity.ok("");
     }
