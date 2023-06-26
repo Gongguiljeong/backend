@@ -18,7 +18,7 @@ public class MainCategoryController {
     private final MainCategoryService mainCategoryService;
 
     @PostMapping("")
-    public ResponseEntity<?> createMainCategory(@Valid @RequestBody MainCategoryCreateRequest mainCategoryCreateRequest) {
+    public ResponseEntity<?> create(@Valid @RequestBody MainCategoryCreateRequest mainCategoryCreateRequest) {
         mainCategoryService.createMainCategory(mainCategoryCreateRequest);
         return ResponseEntity.ok("");
     }
