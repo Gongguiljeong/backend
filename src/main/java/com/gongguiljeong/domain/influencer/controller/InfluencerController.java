@@ -25,14 +25,14 @@ public class InfluencerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> get(@PathVariable Long id) {
-        InfluencerResponse influencerResponse = influencerService.get(id);
+    public ResponseEntity<?> read(@PathVariable Long id) {
+        InfluencerResponse influencerResponse = influencerService.read(id);
         return ResponseEntity.ok(influencerResponse);
     }
 
     @GetMapping("")
-    public ResponseEntity<?> getList(Pageable pageable) {
-        Page<InfluencerResponse> influencerResponses = influencerService.getList(pageable);
+    public ResponseEntity<?> readList(Pageable pageable) {
+        Page<InfluencerResponse> influencerResponses = influencerService.readList(pageable);
         return ResponseEntity.ok(influencerResponses);
     }
 }

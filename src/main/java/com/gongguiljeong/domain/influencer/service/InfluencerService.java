@@ -24,12 +24,12 @@ public class InfluencerService {
         influencerRepository.save(influencerCreateRequest.toEntity());
     }
 
-    public InfluencerResponse get(Long id) {
+    public InfluencerResponse read(Long id) {
         Influencer influencer = influencerRepository.findById(id).orElseThrow(InfluencerNotFoundException::new);
         return new InfluencerResponse(influencer);
     }
 
-    public Page<InfluencerResponse> getList(Pageable pageable) {
+    public Page<InfluencerResponse> readList(Pageable pageable) {
         return influencerRepository.findAll(pageable).map(InfluencerResponse::new);
     }
 }
