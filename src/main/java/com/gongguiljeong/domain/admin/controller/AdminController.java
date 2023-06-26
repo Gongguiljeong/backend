@@ -2,6 +2,7 @@ package com.gongguiljeong.domain.admin.controller;
 
 
 import com.gongguiljeong.domain.admin.domain.AdminJoinRequest;
+import com.gongguiljeong.domain.admin.controller.response.AdminResponse;
 import com.gongguiljeong.domain.admin.service.AdminService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,19 +16,18 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
     private final AdminService adminService;
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<?> join(@Valid @RequestBody AdminJoinRequest adminJoinRequest) {
-        adminService.join(adminJoinRequest);
-        return ResponseEntity.ok("회원가입완료");
+        return ResponseEntity.ok(AdminResponse.from(adminService.join(adminJoinRequest)));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> readAdmin(@PathVariable Long id) {
-        return ResponseEntity.ok(adminService.readAdmin(id));
+    public ResponseEntity<?> read(@PathVariable Long id) {
+        return ResponseEntity.ok(AdminResponse.from(adminService.read(id)));
     }
 
-    @GetMapping("")
-    public ResponseEntity<?> readAdminList(Pageable pageable) {
-        return ResponseEntity.ok(adminService.readAdminList(pageable));
+    @GetMapping
+    public ResponseEntity<?> readList(Pageable pageable) {
+        return ResponseEntity.ok(adminService.readList(pageable).map(AdminResponse::from));
     }
 }

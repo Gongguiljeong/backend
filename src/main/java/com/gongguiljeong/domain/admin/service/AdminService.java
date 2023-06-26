@@ -3,19 +3,18 @@ package com.gongguiljeong.domain.admin.service;
 
 import com.gongguiljeong.domain.admin.domain.Admin;
 import com.gongguiljeong.domain.admin.domain.AdminJoinRequest;
-import com.gongguiljeong.domain.admin.domain.AdminResponse;
-import com.gongguiljeong.domain.admin.domain.LoginRequest;
 import com.gongguiljeong.domain.admin.repository.AdminRepository;
-import com.gongguiljeong.domain.brand.domain.Brand;
-import com.gongguiljeong.domain.brand.repository.BrandRepository;
-import com.gongguiljeong.domain.common.domain.exception.ExceptionCode;
+import com.gongguiljeong.domain.common.domain.LoginRequest;
 import com.gongguiljeong.domain.common.domain.exception.GongguiljeongException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import static com.gongguiljeong.domain.common.domain.exception.ExceptionCode.ADMIN_ALREADY_EXIST;
+import static com.gongguiljeong.domain.common.domain.exception.ExceptionCode.ADMIN_NOT_FOUND;
 
 @RequiredArgsConstructor
 @Service
@@ -23,43 +22,27 @@ import org.springframework.transaction.annotation.Transactional;
 public class AdminService {
 
     private final AdminRepository adminRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
-    private final BrandRepository brandRepository;
-
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void join(AdminJoinRequest adminJoinRequest) {
-        boolean existAdmin = adminRepository.existsByUsername(adminJoinRequest.getUsername());
-        if (existAdmin) {
-            throw new GongguiljeongException(ExceptionCode.BRAND_ALREADY_EXIST);
-        }
-
-        existAdmin = adminRepository.existsByEmail(adminJoinRequest.getEmail());
-        if (existAdmin) {
-            throw new GongguiljeongException(ExceptionCode.BRAND_ALREADY_EXIST);
-        }
-
-        Brand brand = brandRepository.findById(adminJoinRequest.getBrandId()).orElseThrow(() -> new GongguiljeongException(ExceptionCode.BRAND_NOT_FOUND));
-        adminRepository.save(adminJoinRequest.toEntity(brand, passwordEncoder));
+    public Admin join(AdminJoinRequest joinRequest) {
+        boolean existAdmin = adminRepository.existsByUsernameOrEmail(joinRequest.getUsername(), joinRequest.getEmail());
+        if (existAdmin) throw new GongguiljeongException(ADMIN_ALREADY_EXIST);
+        return adminRepository.save(Admin.from(joinRequest, passwordEncoder));
     }
 
-    public AdminResponse readAdmin(Long id) {
-        Admin admin = adminRepository.findById(id).orElseThrow(() -> new GongguiljeongException(ExceptionCode.ADMIN_NOT_FOUND));
-        return new AdminResponse(admin);
+    public Admin read(Long id) {
+        return adminRepository.findById(id).orElseThrow(() -> new GongguiljeongException(ADMIN_NOT_FOUND));
     }
 
-    public Page<AdminResponse> readAdminList(Pageable pageable) {
-        return adminRepository.findAll(pageable).map(AdminResponse::new);
-
+    public Page<Admin> readList(Pageable pageable) {
+        return adminRepository.findAll(pageable);
     }
-
 
     @Transactional
     public Admin login(LoginRequest loginRequest) {
-        Admin admin = adminRepository.findByUsername(loginRequest.getUsername()).orElseThrow(() -> new GongguiljeongException(ExceptionCode.ADMIN_NOT_FOUND));
-        if (!passwordEncoder.matches(loginRequest.getPassword(), admin.getPassword())) {
-            throw new GongguiljeongException(ExceptionCode.ADMIN_NOT_FOUND);
-        }
+        Admin admin = adminRepository.findByUsername(loginRequest.getUsername()).orElseThrow(() -> new GongguiljeongException(ADMIN_NOT_FOUND));
+        admin.checkPassword(loginRequest.getPassword(), passwordEncoder);
         return admin;
     }
 }
