@@ -2,13 +2,17 @@ package com.gongguiljeong.domain.brand.domain;
 
 import com.gongguiljeong.domain.admin.domain.Role;
 import com.gongguiljeong.domain.common.domain.BaseEntity;
+import com.gongguiljeong.domain.common.domain.exception.ExceptionCode;
+import com.gongguiljeong.domain.common.domain.exception.GongguiljeongException;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collection;
 import java.util.List;
@@ -24,6 +28,7 @@ public class Brand extends BaseEntity {
     @Column(name = "brand_id")
     private Long id;
     private String name;
+    @Column(unique = true)
     private String username;
     private String password;
     private String email;
@@ -47,6 +52,12 @@ public class Brand extends BaseEntity {
 
     public Role getRole() {
         return Role.BRAND;
+    }
+
+    public void passwordValid(String loginPassword, PasswordEncoder passwordEncoder) {
+        if (!passwordEncoder.matches(loginPassword, password)) {
+            throw new GongguiljeongException(ExceptionCode.BRAND_NOT_FOUND);
+        }
     }
 }
 

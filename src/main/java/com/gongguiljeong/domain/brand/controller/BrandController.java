@@ -20,8 +20,7 @@ public class BrandController {
     @Operation(summary = "브랜드 회원가입")
     @PostMapping
     public ResponseEntity<?> join(@Valid @RequestBody BrandJoinRequest brandJoinRequest) {
-        brandService.join(brandJoinRequest);
-        return ResponseEntity.status(CREATED).body("브랜드 회원가입 성공");
+        return ResponseEntity.status(CREATED).body(BrandResponse.from(brandService.join(brandJoinRequest)));
     }
 
     @Operation(summary = "브랜드 하나 읽기")

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
 @RequiredArgsConstructor
@@ -24,7 +25,7 @@ public class BrandJoinRequest {
         this.link = link;
     }
 
-    public Brand toEntity(BCryptPasswordEncoder passwordEncoder) {
+    public Brand toEntity(PasswordEncoder passwordEncoder) {
         return Brand.builder()
                 .name(name)
                 .username(username)
