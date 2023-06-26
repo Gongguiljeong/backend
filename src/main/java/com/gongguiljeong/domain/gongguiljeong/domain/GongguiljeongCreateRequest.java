@@ -2,6 +2,7 @@ package com.gongguiljeong.domain.gongguiljeong.domain;
 
 
 import com.gongguiljeong.domain.admin.domain.Admin;
+import com.gongguiljeong.domain.brand.domain.Brand;
 import com.gongguiljeong.domain.category.domain.MainCategory;
 import com.gongguiljeong.domain.category.domain.SubCategory;
 import com.gongguiljeong.domain.image.domain.MainImage;
@@ -27,6 +28,9 @@ public class GongguiljeongCreateRequest {
     private final Long influencerId;
 
     @NotNull
+    private final Long brandId;
+
+    @NotNull
     private final String title;
 
     @NotNull
@@ -40,7 +44,20 @@ public class GongguiljeongCreateRequest {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private final LocalDateTime closeDate;
 
-    public Gongguiljeong toEntity(Admin admin, Influencer influencer, MainCategory mainCategory, SubCategory subCategory, MainImage mainImage) {
-        return new Gongguiljeong(mainImage, mainCategory, subCategory, influencer, admin, title, link, openDate, closeDate);
+    public Gongguiljeong toEntity(Admin admin, Influencer influencer, MainCategory mainCategory, SubCategory subCategory, MainImage mainImage, Brand brand) {
+        return Gongguiljeong.builder()
+                .admin(admin)
+                .influencer(influencer)
+                .brand(brand)
+                .mainCategory(mainCategory)
+                .subCategory(subCategory)
+                .mainImage(mainImage)
+                .title(title)
+                .link(link)
+                .openDate(openDate)
+                .closeDate(closeDate)
+                .interestCount(0)
+                .build();
     }
+
 }

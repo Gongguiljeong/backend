@@ -1,15 +1,14 @@
 package com.gongguiljeong.domain.gongguiljeong.domain;
 
 import com.gongguiljeong.domain.gongguiljeong.domain.Gongguiljeong;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
-@RequiredArgsConstructor
 public class GongguiljeongResponse {
-
     private final Long id;
     private final String title;
     private final LocalDateTime openDate;
@@ -19,14 +18,29 @@ public class GongguiljeongResponse {
     private final String mainCategory;
     private final String subCategory;
 
-    public GongguiljeongResponse(Gongguiljeong gongguiljeong) {
-        this.id = gongguiljeong.getId();
-        this.title = gongguiljeong.getTitle();
-        this.openDate = gongguiljeong.getOpenDate();
-        this.closeDate = gongguiljeong.getCloseDate();
-        this.interestCount = gongguiljeong.getInterestCount();
-        this.mainImageLink = gongguiljeong.getMainImage().getLink();
-        this.mainCategory = gongguiljeong.getMainCategory().getName();
-        this.subCategory = gongguiljeong.getSubCategory().getName();
+
+    @Builder
+    private GongguiljeongResponse(Long id, String title, LocalDateTime openDate, LocalDateTime closeDate, int interestCount, String mainImageLink, String mainCategory, String subCategory) {
+        this.id = id;
+        this.title = title;
+        this.openDate = openDate;
+        this.closeDate = closeDate;
+        this.interestCount = interestCount;
+        this.mainImageLink = mainImageLink;
+        this.mainCategory = mainCategory;
+        this.subCategory = subCategory;
+    }
+
+    public static GongguiljeongResponse from(Gongguiljeong gongguiljeong) {
+        return GongguiljeongResponse.builder()
+                .id(gongguiljeong.getId())
+                .title(gongguiljeong.getTitle())
+                .openDate(gongguiljeong.getOpenDate())
+                .closeDate(gongguiljeong.getCloseDate())
+                .interestCount(gongguiljeong.getInterestCount())
+                .mainImageLink(gongguiljeong.getMainImage().getLink())
+                .mainCategory(gongguiljeong.getMainCategory().getName())
+                .subCategory(gongguiljeong.getSubCategory().getName())
+                .build();
     }
 }

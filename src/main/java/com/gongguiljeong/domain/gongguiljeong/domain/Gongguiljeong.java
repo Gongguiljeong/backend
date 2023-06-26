@@ -2,13 +2,16 @@ package com.gongguiljeong.domain.gongguiljeong.domain;
 
 
 import com.gongguiljeong.domain.admin.domain.Admin;
+import com.gongguiljeong.domain.brand.domain.Brand;
 import com.gongguiljeong.domain.category.domain.MainCategory;
 import com.gongguiljeong.domain.category.domain.SubCategory;
 import com.gongguiljeong.domain.image.domain.MainImage;
+import com.gongguiljeong.domain.image.domain.SubImage;
 import com.gongguiljeong.domain.influencer.domain.Influencer;
 import com.gongguiljeong.domain.common.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -40,8 +43,13 @@ public class Gongguiljeong extends BaseEntity {
     private Influencer influencer;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id", nullable = false)
+    private Brand brand;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_id", nullable = false)
     private Admin admin;
+
 
 
     private String title;
@@ -50,28 +58,19 @@ public class Gongguiljeong extends BaseEntity {
     private LocalDateTime closeDate;
     private int interestCount;
 
-
-    public Gongguiljeong(MainImage mainImage, MainCategory mainCategory, SubCategory subCategory, Influencer influencer, Admin admin, String title, String link, LocalDateTime openDate, LocalDateTime closeDate) {
+    @Builder
+    private Gongguiljeong(Long id, MainImage mainImage, MainCategory mainCategory, SubCategory subCategory, Influencer influencer, Brand brand, Admin admin, String title, String link, LocalDateTime openDate, LocalDateTime closeDate, int interestCount) {
+        this.id = id;
         this.mainImage = mainImage;
         this.mainCategory = mainCategory;
         this.subCategory = subCategory;
         this.influencer = influencer;
+        this.brand = brand;
         this.admin = admin;
         this.title = title;
         this.link = link;
         this.openDate = openDate;
         this.closeDate = closeDate;
-        this.interestCount = 0;
-    }
-
-    public Gongguiljeong(MainImage mainImage, MainCategory mainCategory, SubCategory subCategory, Influencer influencer, Admin admin, String title, String link) {
-        this.mainImage = mainImage;
-        this.mainCategory = mainCategory;
-        this.subCategory = subCategory;
-        this.influencer = influencer;
-        this.admin = admin;
-        this.title = title;
-        this.link = link;
-        this.interestCount = 0;
+        this.interestCount = interestCount;
     }
 }
