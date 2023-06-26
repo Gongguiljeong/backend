@@ -1,6 +1,7 @@
-package com.gongguiljeong.domain.admin.domain;
+package com.gongguiljeong.domain.common.domain;
 
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -8,12 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoginRequest {
 
-    private Long id;
     private String username;
     private String password;
 
-    public LoginRequest(Long id, String username, String password) {
-        this.id = id;
+    @Builder
+    private LoginRequest(String username, String password) {
         this.username = username;
         this.password = password;
     }

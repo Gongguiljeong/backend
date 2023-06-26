@@ -1,7 +1,8 @@
 package com.gongguiljeong.domain.common.controller;
 
 import com.gongguiljeong.domain.admin.domain.Admin;
-import com.gongguiljeong.domain.admin.domain.LoginRequest;
+import com.gongguiljeong.domain.common.domain.LoginRequest;
+import com.gongguiljeong.domain.admin.domain.Role;
 import com.gongguiljeong.domain.admin.service.AdminService;
 import com.gongguiljeong.domain.brand.domain.Brand;
 import com.gongguiljeong.domain.brand.service.BrandService;
@@ -34,26 +35,16 @@ public class LoginController {
     private final KakaoService kakaoService;
     private final JwtProvider jwtProvider;
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest) {
-        if (loginRequest.getId() == 1) {
-            Admin admin = adminService.login(loginRequest);
-            AuthenticationEntity authenticationEntity = new AuthenticationEntity(admin.getId(), admin.getRole());
-            String accessToken = jwtProvider.createAccessToken(authenticationEntity);
-            String refreshToken = jwtProvider.createRefreshToken(authenticationEntity);
-            ResponseCookie refreshTokenCookie = getRefreshTokenCookie(refreshToken);
-            return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString()).header(HttpHeaders.AUTHORIZATION, accessToken).build();
-        }
+    @PostMapping("/brands/login")
+    public ResponseEntity<?> brandLogin(@Valid @RequestBody LoginRequest loginRequest) {
+        Brand brand = brandService.login(loginRequest);
+        return getResponseEntity(brand.getId(), brand.getRole());
+    }
 
-        if (loginRequest.getId() == 2) {
-            Brand brand = brandService.login(loginRequest);
-            AuthenticationEntity authenticationEntity = new AuthenticationEntity(brand.getId(), brand.getRole());
-            String accessToken = jwtProvider.createAccessToken(authenticationEntity);
-            String refreshToken = jwtProvider.createRefreshToken(authenticationEntity);
-            ResponseCookie refreshTokenCookie = getRefreshTokenCookie(refreshToken);
-            return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString()).header(HttpHeaders.AUTHORIZATION, accessToken).build();
-        }
-        return ResponseEntity.badRequest().body("로그인 실패");
+    @PostMapping("/admins/login")
+    public ResponseEntity<?> adminLogin(@Valid @RequestBody LoginRequest loginRequest) {
+        Admin admin = adminService.login(loginRequest);
+        return getResponseEntity(admin.getId(), admin.getRole());
     }
 
     @GetMapping("/kakao")
@@ -65,16 +56,12 @@ public class LoginController {
     public ResponseEntity<?> kakaoLogin(@RequestParam(value = "code") String code) throws URISyntaxException {
         KakaoProfile kakaoProfile = kakaoService.getInfo(code);
         User user = userService.login(kakaoProfile);
-        AuthenticationEntity authenticationEntity = new AuthenticationEntity(user.getId(), user.getRole());
-        String accessToken = jwtProvider.createAccessToken(authenticationEntity);
-        String refreshToken = jwtProvider.createRefreshToken(authenticationEntity);
-        ResponseCookie refreshTokenCookie = getRefreshTokenCookie(refreshToken);
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString()).header(HttpHeaders.AUTHORIZATION, accessToken).build();
+        return getResponseEntity(user.getId(), user.getRole());
     }
 
     @Operation(summary = "리프레쉬 토큰 검증하고 엑세스토큰 반환")
     @PostMapping("/refresh")
-    public ResponseEntity<?> getInfo(@CookieValue(value = "refreshToken") Cookie cookie) {
+    public ResponseEntity<?> getRefreshToken(@CookieValue(value = "refreshToken") Cookie cookie) {
         String refreshToken = cookie.getValue();
         if (jwtProvider.validateRefreshToken(refreshToken)) {
             AuthenticationEntity authenticationEntity = jwtProvider.refreshTokenVerify(refreshToken);
@@ -84,6 +71,15 @@ public class LoginController {
             return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString()).header(HttpHeaders.AUTHORIZATION, accessToken).build();
         }
         return ResponseEntity.badRequest().body("refreshtoken 없음");
+    }
+
+
+    private ResponseEntity<?> getResponseEntity(Long id, Role role) {
+        AuthenticationEntity authenticationEntity = new AuthenticationEntity(id, role);
+        String accessToken = jwtProvider.createAccessToken(authenticationEntity);
+        String refreshToken = jwtProvider.createRefreshToken(authenticationEntity);
+        ResponseCookie refreshTokenCookie = getRefreshTokenCookie(refreshToken);
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString()).header(HttpHeaders.AUTHORIZATION, accessToken).build();
     }
 
     private static ResponseCookie getRefreshTokenCookie(String refreshToken) {
