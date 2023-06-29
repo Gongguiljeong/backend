@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Table(name = "sub_images")
 public class SubImage extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sub_image_id")
     private Long id;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gongguiljeong_id", nullable = false)
@@ -26,6 +26,7 @@ public class SubImage extends BaseEntity {
     private String name;
 
     @Column(nullable = false)
+    @Lob
     private String link;
 
 

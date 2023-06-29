@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Table(name = "main_images")
 public class MainImage extends BaseEntity  {
 
     @Id
@@ -21,6 +22,7 @@ public class MainImage extends BaseEntity  {
     private String name;
 
     @Column(nullable = false)
+    @Lob
     private String link;
 
     public MainImage(String name, String link) {
