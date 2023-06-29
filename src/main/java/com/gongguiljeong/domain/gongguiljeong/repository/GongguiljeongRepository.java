@@ -1,6 +1,8 @@
 package com.gongguiljeong.domain.gongguiljeong.repository;
 
 import com.gongguiljeong.domain.gongguiljeong.domain.Gongguiljeong;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,4 +15,6 @@ public interface GongguiljeongRepository extends JpaRepository<Gongguiljeong, Lo
     Optional<Gongguiljeong> findGongguiljeongById(Long id);
 
 
+    @EntityGraph(attributePaths = {"mainImage", "mainCategory", "subCategory", "influencer", "brand", "admin"})
+    Page<Gongguiljeong> findByTitleContaining(String title ,Pageable pageable );
 }

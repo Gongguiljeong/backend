@@ -109,23 +109,23 @@ values (9, '메인이미지3', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAO
 
 -- Gongguiljeong
 insert into gongguiljeongs (gongguiljeong_id, influencer_id, admin_id, main_image_id, sub_category_id, main_category_id, brand_id, title, link, open_date, close_date, status, interest_count, create_date, update_date)
-values (1, 1, 1, 1, 1, 1, 1,'공구일정이름1', 'https://www.naver.com', now(), now() ,'Y' , 1,  now(), now());
+values (1, 1, 1, 1, 1, 1, 1,'공구일정이름1', 'https://www.naver.com', now(), now() ,'Y' , 10,  now() - 1, now() - 1);
 insert into gongguiljeongs (gongguiljeong_id, influencer_id, admin_id, main_image_id, sub_category_id, main_category_id, brand_id, title, link, open_date, close_date, status, interest_count, create_date, update_date)
-values (2, 1, 1, 2, 1, 1, 1,'공구일정이름2', 'https://www.naver.com', now(), now() , 'Y',1,  now(), now());
+values (2, 1, 1, 2, 1, 1, 1,'공구일정이름2', 'https://www.naver.com', now(), now() , 'Y',9,  now(), now());
 insert into gongguiljeongs (gongguiljeong_id, influencer_id, admin_id, main_image_id, sub_category_id, main_category_id, brand_id, title, link, open_date, close_date, status, interest_count, create_date, update_date)
-values (3, 1, 1, 3, 1, 1, 1,'공구일정이름3', 'https://www.naver.com', now(), now() , 'Y',1,  now(), now());
+values (3, 1, 1, 3, 1, 1, 1,'공구일정이름3', 'https://www.naver.com', now(), now() , 'Y',8,  now(), now());
 insert into gongguiljeongs (gongguiljeong_id, influencer_id, admin_id, main_image_id, sub_category_id, main_category_id, brand_id, title, link, open_date, close_date, status, interest_count, create_date, update_date)
-values (4, 1, 1, 4, 1, 1, 1,'공구일정이름4', 'https://www.naver.com', now(), now() , 'Y',1,  now(), now());
+values (4, 1, 1, 4, 1, 1, 1,'공구일정이름4', 'https://www.naver.com', now(), now() , 'Y',7,  now(), now());
 insert into gongguiljeongs (gongguiljeong_id, influencer_id, admin_id, main_image_id, sub_category_id, main_category_id, brand_id, title, link, open_date, close_date, status, interest_count, create_date, update_date)
-values (5, 1, 1, 5, 1, 1, 1,'공구일정이름5', 'https://www.naver.com', now(), now() , 'Y',1,  now(), now());
+values (5, 1, 1, 5, 1, 1, 1,'공구일정이름5', 'https://www.naver.com', now(), now() , 'Y',6,  now(), now());
 insert into gongguiljeongs (gongguiljeong_id, influencer_id, admin_id, main_image_id, sub_category_id, main_category_id, brand_id, title, link, open_date, close_date, status, interest_count, create_date, update_date)
-values (6, 1, 1, 6, 1, 1, 1,'공구일정이름6', 'https://www.naver.com', now(), now() , 'Y',1,  now(), now());
+values (6, 1, 1, 6, 1, 1, 1,'공구일정이름6', 'https://www.naver.com', now(), now() , 'Y',5,  now(), now());
 insert into gongguiljeongs (gongguiljeong_id, influencer_id, admin_id, main_image_id, sub_category_id, main_category_id, brand_id, title, link, open_date, close_date, status, interest_count, create_date, update_date)
-values (7, 1, 1, 7, 1, 1, 1,'공구일정이름7', 'https://www.naver.com', now(), now() , 'Y',1,  now(), now());
+values (7, 1, 1, 7, 1, 1, 1,'공구일정이름7', 'https://www.naver.com', now(), now() , 'Y',4,  now(), now());
 insert into gongguiljeongs (gongguiljeong_id, influencer_id, admin_id, main_image_id, sub_category_id, main_category_id, brand_id, title, link, open_date, close_date, status, interest_count, create_date, update_date)
-values (8, 1, 1, 8, 1, 1, 1,'공구일정이름8', 'https://www.naver.com', now(), now() , 'Y',1,  now(), now());
+values (8, 1, 1, 8, 1, 1, 1,'공구일정이름8', 'https://www.naver.com', now(), now() , 'Y',3,  now(), now());
 insert into gongguiljeongs (gongguiljeong_id, influencer_id, admin_id, main_image_id, sub_category_id, main_category_id, brand_id, title, link, open_date, close_date, status, interest_count, create_date, update_date)
-values (9, 1, 1, 9, 1, 1, 1,'공구일정이름9', 'https://www.naver.com', now(), now() , 'Y',1,  now(), now());
+values (9, 1, 1, 9, 1, 1, 1,'공구일정이름9', 'https://www.naver.com', now(), now() , 'Y',3,  now(), now());
 
 
 -- sub_image

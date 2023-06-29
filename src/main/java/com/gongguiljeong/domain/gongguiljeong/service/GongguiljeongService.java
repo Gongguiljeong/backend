@@ -24,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Range;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -57,10 +58,10 @@ public class GongguiljeongService {
     public Gongguiljeong create(List<MultipartFile> files, GongguiljeongCreateRequest createRequest) {
         Admin admin = adminRepository.findById(1L).orElseThrow(() -> new GongguiljeongException(ADMIN_NOT_FOUND));
         Gongguiljeong gongguiljeong = null;
-        Influencer influencer = influencerRepository.findById(createRequest.getInfluencerId()).orElseThrow(()-> new GongguiljeongException(INFLUENCER_NOT_FOUND));
-        Brand brand = brandRepository.findById(createRequest.getBrandId()).orElseThrow(()-> new GongguiljeongException(BRAND_NOT_FOUND));
-        MainCategory mainCategory = mainCategoryRepository.findById(createRequest.getMainCategoryId()).orElseThrow(()-> new GongguiljeongException(MAIN_CATEGORY_NOT_FOUND));
-        SubCategory subCategory = subCategoryRepository.findById(createRequest.getSubCategoryId()).orElseThrow(()-> new GongguiljeongException(SUB_CATEGORY_NOT_FOUND));
+        Influencer influencer = influencerRepository.findById(createRequest.getInfluencerId()).orElseThrow(() -> new GongguiljeongException(INFLUENCER_NOT_FOUND));
+        Brand brand = brandRepository.findById(createRequest.getBrandId()).orElseThrow(() -> new GongguiljeongException(BRAND_NOT_FOUND));
+        MainCategory mainCategory = mainCategoryRepository.findById(createRequest.getMainCategoryId()).orElseThrow(() -> new GongguiljeongException(MAIN_CATEGORY_NOT_FOUND));
+        SubCategory subCategory = subCategoryRepository.findById(createRequest.getSubCategoryId()).orElseThrow(() -> new GongguiljeongException(SUB_CATEGORY_NOT_FOUND));
         //2. 이미지 저장
 
         for (int i = 0; i < files.size(); i++) {
@@ -103,5 +104,9 @@ public class GongguiljeongService {
         if (gongguiljeong.isStatus()) {
             gongguiljeong.delete();
         }
+    }
+
+    public Page<Gongguiljeong> getSearchList(Pageable pageable, String title) {
+        return gongguiljeongRepository.findByTitleContaining(title, pageable);
     }
 }

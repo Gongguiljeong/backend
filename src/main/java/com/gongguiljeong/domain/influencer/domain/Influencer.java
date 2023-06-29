@@ -12,7 +12,6 @@ import org.hibernate.annotations.Where;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Table(name = "influencers")
-@Where(clause = "status = 'Y'")
 public class Influencer extends BaseEntity {
 
     @Id
