@@ -36,13 +36,11 @@ public class GongguiljeongController {
         return ResponseEntity.status(HttpStatus.CREATED).body(gongguiljeong.getId());
     }
 
-
     @Operation(summary = "공구일정 상세보기")
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable Long id) {
         return ResponseEntity.ok(GongguiljeongResponse.from(gongguiljeongService.get(id)));
     }
-
 
     @Operation(summary = "메인화면 공구일정 3개 가져오기")
     @GetMapping
@@ -54,7 +52,7 @@ public class GongguiljeongController {
         return ResponseEntity.ok(gongguiljeongService.getList(pageable).map(GongguiljeongResponse::from));
     }
 
-    @Operation(summary = "카테고리로 공구일정을 가져온다.")
+    @Operation(summary = "카테고리로 공구일정을 리스트를 가져온다.")
     @GetMapping("/category")
     public ResponseEntity<?> category(@PageableDefault(size = 20) @SortDefault.SortDefaults({
             @SortDefault(sort = "closeDate", direction = Sort.Direction.DESC),
@@ -75,7 +73,6 @@ public class GongguiljeongController {
         return ResponseEntity.ok(gongguiljeongService.getList(pageable).map(GongguiljeongResponse::from));
     }
 
-
     @Operation(summary = "공구일정 타이틀로 검색")
     @GetMapping("/search")
     public ResponseEntity<?> search(@PageableDefault(size = 20) @SortDefault.SortDefaults({
@@ -88,13 +85,11 @@ public class GongguiljeongController {
         return ResponseEntity.ok(gongguiljeongService.findByTitle(pageable, title).map(GongguiljeongResponse::from));
     }
 
-
     @Operation(summary = "공구일정 삭제하기")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         gongguiljeongService.delete(id);
     }
-
 
     @Operation(summary = "공구일정 수정하기")
     @PutMapping("/{id}")

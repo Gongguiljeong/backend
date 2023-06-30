@@ -5,6 +5,7 @@ import com.gongguiljeong.domain.user.domain.User;
 import com.gongguiljeong.domain.common.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -27,4 +28,10 @@ public class InterestGongguiljeong extends BaseEntity {
     @JoinColumn(name = "gongguiljeong_id", nullable = false)
     private Gongguiljeong gongguiljeong;
 
+    @Builder
+    private InterestGongguiljeong(Long id, User user, Gongguiljeong gongguiljeong) {
+        this.id = id;
+        this.user = user;
+        this.gongguiljeong = gongguiljeong;
+    }
 }

@@ -34,8 +34,7 @@ public class GongguiljeongQueryRepositoryImpl implements GongguiljeongQueryRepos
 
     @Override
     public Page<Gongguiljeong> findByMainCategoryIdAndSubCategoryId(Long mainCategoryId, Long subCategoryId, Pageable pageable) {
-        List<Gongguiljeong> content = jpaQueryFactory.select(gongguiljeong)
-                .from(gongguiljeong)
+        List<Gongguiljeong> content = jpaQueryFactory.selectFrom(gongguiljeong)
                 .join(gongguiljeong.mainCategory, mainCategory).fetchJoin()
                 .join(gongguiljeong.mainImage, mainImage).fetchJoin()
                 .join(gongguiljeong.subCategory, subCategory).fetchJoin()
@@ -46,7 +45,16 @@ public class GongguiljeongQueryRepositoryImpl implements GongguiljeongQueryRepos
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
-        return new PageImpl<>(content,pageable,content.size());
+        return new PageImpl<>(content,pageable, jpaQueryFactory.selectFrom(gongguiljeong)
+                .join(gongguiljeong.mainCategory, mainCategory).fetchJoin()
+                .join(gongguiljeong.mainImage, mainImage).fetchJoin()
+                .join(gongguiljeong.subCategory, subCategory).fetchJoin()
+                .join(gongguiljeong.influencer, influencer).fetchJoin()
+                .join(gongguiljeong.brand, brand).fetchJoin()
+                .join(gongguiljeong.admin, admin).fetchJoin()
+                .where(eqMainCategoryId(mainCategoryId), eqSubCategoryId(subCategoryId))
+                .fetchCount());
+        //TODO : count 쿼리 따로 작성해야함
     }
 
     private BooleanExpression eqMainCategoryId(Long mainCategoryId) {
@@ -62,6 +70,5 @@ public class GongguiljeongQueryRepositoryImpl implements GongguiljeongQueryRepos
             return null;
         }
         return gongguiljeong.subCategory.id.eq(subCategoryId);
-
     }
 }
