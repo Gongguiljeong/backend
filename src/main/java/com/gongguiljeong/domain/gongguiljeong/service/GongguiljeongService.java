@@ -12,7 +12,6 @@ import com.gongguiljeong.domain.category.repository.SubCategoryRepository;
 import com.gongguiljeong.domain.common.domain.exception.GongguiljeongException;
 import com.gongguiljeong.domain.gongguiljeong.domain.Gongguiljeong;
 import com.gongguiljeong.domain.gongguiljeong.domain.GongguiljeongCreateRequest;
-import com.gongguiljeong.domain.gongguiljeong.domain.exception.GongguiljeongNotFoundException;
 import com.gongguiljeong.domain.gongguiljeong.repository.GongguiljeongRepository;
 import com.gongguiljeong.domain.image.domain.MainImage;
 import com.gongguiljeong.domain.image.domain.SubImage;
@@ -24,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Range;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -106,7 +104,11 @@ public class GongguiljeongService {
         }
     }
 
-    public Page<Gongguiljeong> getSearchList(Pageable pageable, String title) {
+    public Page<Gongguiljeong> findByTitle(Pageable pageable, String title) {
         return gongguiljeongRepository.findByTitleContaining(title, pageable);
+    }
+
+    public Page<Gongguiljeong> findByCategoryId(Pageable pageable, Long mainCategoryId, Long subCategoryId) {
+        return gongguiljeongRepository.findByMainCategoryIdAndSubCategoryId(mainCategoryId, subCategoryId, pageable);
     }
 }

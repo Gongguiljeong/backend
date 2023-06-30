@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface GongguiljeongRepository extends JpaRepository<Gongguiljeong, Long> {
+public interface GongguiljeongRepository extends JpaRepository<Gongguiljeong, Long>, GongguiljeongQueryRepository {
 
 
     @EntityGraph(attributePaths = {"mainImage", "mainCategory", "subCategory", "influencer", "brand", "admin"})
@@ -17,4 +17,7 @@ public interface GongguiljeongRepository extends JpaRepository<Gongguiljeong, Lo
 
     @EntityGraph(attributePaths = {"mainImage", "mainCategory", "subCategory", "influencer", "brand", "admin"})
     Page<Gongguiljeong> findByTitleContaining(String title ,Pageable pageable );
+
+
+
 }
