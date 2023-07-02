@@ -47,12 +47,12 @@ public class LoginController {
         return getResponseEntity(admin.getId(), admin.getRole());
     }
 
-    @GetMapping("/kakao")
+/*    @GetMapping("/users/kakao")
     public void login(HttpServletResponse response) throws IOException {
         response.sendRedirect("https://kauth.kakao.com/oauth/authorize?client_id=c78d60a3b466b1b1c743a2bb745a1731&redirect_uri=http://localhost:8080/users/kakao/callback&response_type=code");
-    }
+    }*/
 
-    @GetMapping("/users/kakao/callback")
+    @GetMapping("/users/kakao")
     public ResponseEntity<?> kakaoLogin(@RequestParam(value = "code") String code) throws URISyntaxException {
         KakaoProfile kakaoProfile = kakaoService.getInfo(code);
         User user = userService.login(kakaoProfile);
