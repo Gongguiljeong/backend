@@ -1,9 +1,8 @@
-package com.gongguiljeong.domain.gongguiljeong.domain;
+package com.gongguiljeong.domain.gongguiljeong.controller.response;
 
 import com.gongguiljeong.domain.gongguiljeong.domain.Gongguiljeong;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -31,7 +30,7 @@ public class GongguiljeongResponse {
         this.subCategory = subCategory;
     }
 
-    public static GongguiljeongResponse from(Gongguiljeong gongguiljeong) {
+    public static GongguiljeongResponse  from(Gongguiljeong gongguiljeong) {
         return GongguiljeongResponse.builder()
                 .id(gongguiljeong.getId())
                 .title(gongguiljeong.getTitle())
