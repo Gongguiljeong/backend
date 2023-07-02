@@ -32,7 +32,7 @@ public abstract class BaseEntity {
         this.status = Status.Y;
     }
 
-    public boolean isStatus() {
-        return this.status.equals(Status.Y);
+    public Status status() {
+        return status;
     }
 }
