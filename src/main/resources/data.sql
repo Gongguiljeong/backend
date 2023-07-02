@@ -138,3 +138,8 @@ values (3, 1,'서브이미지3', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA
 
 
 
+
+-- interest_gongguiljeong
+--
+-- insert into interest_gongguiljeong (interest_gongguiljeong_id, user_id, gongguiljeong_id, status, create_date, update_date)
+-- values (1,1)
