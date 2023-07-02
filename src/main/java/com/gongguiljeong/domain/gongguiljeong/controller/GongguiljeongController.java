@@ -1,22 +1,20 @@
 package com.gongguiljeong.domain.gongguiljeong.controller;
 
 
-import com.gongguiljeong.domain.gongguiljeong.domain.Gongguiljeong;
-import com.gongguiljeong.domain.gongguiljeong.domain.GongguiljeongCreateRequest;
-import com.gongguiljeong.domain.gongguiljeong.domain.GongguiljeongResponse;
+import com.gongguiljeong.domain.gongguiljeong.controller.response.GongguiljeongDetailResponse;
+import com.gongguiljeong.domain.gongguiljeong.controller.response.GongguiljeongResponse;
 import com.gongguiljeong.domain.gongguiljeong.service.GongguiljeongService;
+import com.gongguiljeong.domain.image.domain.SubImage;
+import com.gongguiljeong.domain.image.service.SubImageService;
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,19 +25,13 @@ import java.util.List;
 public class GongguiljeongController {
 
     private final GongguiljeongService gongguiljeongService;
-
-
-    @Operation(summary = "공구일정 등록하기")
-    @PostMapping
-    public ResponseEntity<?> create(@RequestPart(value = "images") List<MultipartFile> files, @Valid @RequestPart(value = "data") GongguiljeongCreateRequest gongguiljeongCreateRequest) {
-        Gongguiljeong gongguiljeong = gongguiljeongService.create(files, gongguiljeongCreateRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(gongguiljeong.getId());
-    }
+    private final SubImageService subImageService;
 
     @Operation(summary = "공구일정 상세보기")
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable Long id) {
-        return ResponseEntity.ok(GongguiljeongResponse.from(gongguiljeongService.get(id)));
+        List<SubImage> subImages = subImageService.getByGonggiljeongId(id);
+        return ResponseEntity.ok(GongguiljeongDetailResponse.from(gongguiljeongService.get(id), subImages));
     }
 
     @Operation(summary = "메인화면 공구일정 3개 가져오기")
@@ -52,7 +44,7 @@ public class GongguiljeongController {
         return ResponseEntity.ok(gongguiljeongService.getList(pageable).map(GongguiljeongResponse::from));
     }
 
-    @Operation(summary = "카테고리로 공구일정을 리스트를 가져온다.")
+    @Operation(summary = "카테고리로 공구일정을 리스트를  가져온다.")
     @GetMapping("/category")
     public ResponseEntity<?> category(@PageableDefault(size = 20) @SortDefault.SortDefaults({
             @SortDefault(sort = "closeDate", direction = Sort.Direction.DESC),
@@ -81,19 +73,9 @@ public class GongguiljeongController {
             @SortDefault(sort = "interestCount", direction = Sort.Direction.ASC),
             @SortDefault(sort = "title", direction = Sort.Direction.ASC),
     }) Pageable pageable, @RequestParam(value = "title") String title) {
-        log.info("검색 title : {}", title);
+        log.debug("검색 title : {}", title);
         return ResponseEntity.ok(gongguiljeongService.findByTitle(pageable, title).map(GongguiljeongResponse::from));
     }
 
-    @Operation(summary = "공구일정 삭제하기")
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        gongguiljeongService.delete(id);
-    }
 
-    @Operation(summary = "공구일정 수정하기")
-    @PutMapping("/{id}")
-    public ResponseEntity<?> update() {
-        return ResponseEntity.ok("");
-    }
 }

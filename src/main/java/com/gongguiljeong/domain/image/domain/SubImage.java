@@ -1,7 +1,7 @@
 package com.gongguiljeong.domain.image.domain;
 
-import com.gongguiljeong.domain.gongguiljeong.domain.Gongguiljeong;
 import com.gongguiljeong.domain.common.domain.BaseEntity;
+import com.gongguiljeong.domain.gongguiljeong.domain.Gongguiljeong;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
