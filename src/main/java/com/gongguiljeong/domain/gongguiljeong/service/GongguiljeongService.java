@@ -11,7 +11,8 @@ import com.gongguiljeong.domain.category.repository.MainCategoryRepository;
 import com.gongguiljeong.domain.category.repository.SubCategoryRepository;
 import com.gongguiljeong.domain.common.domain.exception.GongguiljeongException;
 import com.gongguiljeong.domain.gongguiljeong.domain.Gongguiljeong;
-import com.gongguiljeong.domain.gongguiljeong.domain.GongguiljeongCreateRequest;
+import com.gongguiljeong.domain.gongguiljeong.domain.request.GongguiljeongCreateRequest;
+import com.gongguiljeong.domain.gongguiljeong.domain.request.GongguiljeongUpdateRequest;
 import com.gongguiljeong.domain.gongguiljeong.repository.GongguiljeongRepository;
 import com.gongguiljeong.domain.image.domain.MainImage;
 import com.gongguiljeong.domain.image.domain.SubImage;
@@ -33,6 +34,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import static com.gongguiljeong.domain.common.domain.Status.Y;
 import static com.gongguiljeong.domain.common.domain.exception.ExceptionCode.*;
 
 @Service
@@ -53,17 +55,16 @@ public class GongguiljeongService {
 
 
     @Transactional
-    public Gongguiljeong create(List<MultipartFile> files, GongguiljeongCreateRequest createRequest) {
-        Admin admin = adminRepository.findById(1L).orElseThrow(() -> new GongguiljeongException(ADMIN_NOT_FOUND));
+    public Gongguiljeong create(List<MultipartFile> files, GongguiljeongCreateRequest gongguiljeongCreateRequest, Long id) {
+        Admin admin = adminRepository.findById(id).orElseThrow(() -> new GongguiljeongException(ADMIN_NOT_FOUND));
         Gongguiljeong gongguiljeong = null;
-        Influencer influencer = influencerRepository.findById(createRequest.getInfluencerId()).orElseThrow(() -> new GongguiljeongException(INFLUENCER_NOT_FOUND));
-        Brand brand = brandRepository.findById(createRequest.getBrandId()).orElseThrow(() -> new GongguiljeongException(BRAND_NOT_FOUND));
-        MainCategory mainCategory = mainCategoryRepository.findById(createRequest.getMainCategoryId()).orElseThrow(() -> new GongguiljeongException(MAIN_CATEGORY_NOT_FOUND));
-        SubCategory subCategory = subCategoryRepository.findById(createRequest.getSubCategoryId()).orElseThrow(() -> new GongguiljeongException(SUB_CATEGORY_NOT_FOUND));
+        Influencer influencer = influencerRepository.findById(gongguiljeongCreateRequest.getInfluencerId()).orElseThrow(() -> new GongguiljeongException(INFLUENCER_NOT_FOUND));
+        MainCategory mainCategory = mainCategoryRepository.findById(gongguiljeongCreateRequest.getMainCategoryId()).orElseThrow(() -> new GongguiljeongException(MAIN_CATEGORY_NOT_FOUND));
+        SubCategory subCategory = subCategoryRepository.findById(gongguiljeongCreateRequest.getSubCategoryId()).orElseThrow(() -> new GongguiljeongException(SUB_CATEGORY_NOT_FOUND));
         //2. 이미지 저장
 
         for (int i = 0; i < files.size(); i++) {
-            log.info("file content-type: {}", files.get(i).getContentType());
+            log.debug("file content-type: {}", files.get(i).getContentType());
             if (Objects.requireNonNull(files.get(i).getContentType()).startsWith("image")) {
                 String ext = Objects.requireNonNull(files.get(i).getContentType()).split("/")[1];
                 String imageSaveName = UUID.randomUUID() + "." + ext;
@@ -72,9 +73,9 @@ public class GongguiljeongService {
                     files.get(i).transferTo(new File(path));
                     if (i == 0) {
                         MainImage mainImage = mainImageRepository.save(new MainImage(imageSaveName, path));
-                        gongguiljeong = gongguiljeongRepository.save(createRequest.toEntity(admin, influencer, mainCategory, subCategory, mainImage, brand));
-                        log.info("메인이미지 : {}", mainImage);
-                        log.info("공구일정 저장 : {}", gongguiljeong);
+                        gongguiljeong = gongguiljeongRepository.save(Gongguiljeong.from(admin, influencer, mainCategory, subCategory, mainImage, gongguiljeongCreateRequest));
+                        log.debug("메인이미지 : {}", mainImage);
+                        log.debug("공구일정 저장 : {}", gongguiljeong);
                     }
                     subImageRepository.save(new SubImage(gongguiljeong, imageSaveName, path));
                 } catch (IOException e) {
@@ -86,10 +87,7 @@ public class GongguiljeongService {
     }
 
     public Gongguiljeong get(Long id) {
-        Gongguiljeong gongguiljeong = gongguiljeongRepository.findGongguiljeongById(id).orElseThrow(() -> new GongguiljeongException(GONGGUILJEONG_NOT_FOUND));
-        if (!gongguiljeong.isStatus()) throw new GongguiljeongException(GONGGUILJEONG_NOT_FOUND);
-        return gongguiljeong;
-
+        return gongguiljeongRepository.findById(id).orElseThrow(() -> new GongguiljeongException(GONGGUILJEONG_NOT_FOUND));
     }
 
     public Page<Gongguiljeong> getList(Pageable pageable) {
@@ -99,7 +97,7 @@ public class GongguiljeongService {
     @Transactional
     public void delete(Long id) {
         Gongguiljeong gongguiljeong = gongguiljeongRepository.findById(id).orElseThrow(() -> new GongguiljeongException(GONGGUILJEONG_NOT_FOUND));
-        if (gongguiljeong.isStatus()) {
+        if (gongguiljeong.status().equals(Y)) {
             gongguiljeong.delete();
         }
     }
@@ -110,5 +108,16 @@ public class GongguiljeongService {
 
     public Page<Gongguiljeong> findByCategoryId(Pageable pageable, Long mainCategoryId, Long subCategoryId) {
         return gongguiljeongRepository.findByMainCategoryIdAndSubCategoryId(mainCategoryId, subCategoryId, pageable);
+    }
+
+    @Transactional
+    public Gongguiljeong update(GongguiljeongUpdateRequest gongguiljeongUpdateRequest, Long id) {
+        Gongguiljeong gongguiljeong = gongguiljeongRepository.findById(id).orElseThrow(() -> new GongguiljeongException(GONGGUILJEONG_NOT_FOUND));
+        Influencer influencer = influencerRepository.findById(gongguiljeongUpdateRequest.getInfluencerId()).orElseThrow(() -> new GongguiljeongException(INFLUENCER_NOT_FOUND));
+        MainCategory mainCategory = mainCategoryRepository.findById(gongguiljeongUpdateRequest.getMainCategoryId()).orElseThrow(() -> new GongguiljeongException(MAIN_CATEGORY_NOT_FOUND));
+        SubCategory subCategory = subCategoryRepository.findById(gongguiljeongUpdateRequest.getSubCategoryId()).orElseThrow(() -> new GongguiljeongException(SUB_CATEGORY_NOT_FOUND));
+        Brand brand = brandRepository.findById(gongguiljeongUpdateRequest.getBrandId()).orElseThrow(() -> new GongguiljeongException(BRAND_NOT_FOUND));
+        gongguiljeong.update(gongguiljeongUpdateRequest, influencer, mainCategory, subCategory, brand);
+        return gongguiljeong;
     }
 }

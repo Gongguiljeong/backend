@@ -12,12 +12,11 @@ public interface GongguiljeongRepository extends JpaRepository<Gongguiljeong, Lo
 
 
     @EntityGraph(attributePaths = {"mainImage", "mainCategory", "subCategory", "influencer", "brand", "admin"})
-    Optional<Gongguiljeong> findGongguiljeongById(Long id);
+    Optional<Gongguiljeong> findById(Long id);
 
 
     @EntityGraph(attributePaths = {"mainImage", "mainCategory", "subCategory", "influencer", "brand", "admin"})
-    Page<Gongguiljeong> findByTitleContaining(String title ,Pageable pageable );
-
+    Page<Gongguiljeong> findByTitleContaining(String title, Pageable pageable);
 
 
 }

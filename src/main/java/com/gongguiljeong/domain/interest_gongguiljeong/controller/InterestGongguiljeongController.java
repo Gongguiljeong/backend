@@ -2,7 +2,6 @@ package com.gongguiljeong.domain.interest_gongguiljeong.controller;
 
 
 import com.gongguiljeong.domain.common.domain.AuthenticationEntity;
-import com.gongguiljeong.domain.gongguiljeong.domain.GongguiljeongResponse;
 import com.gongguiljeong.domain.interest_gongguiljeong.domain.InterestGongguiljeong;
 import com.gongguiljeong.domain.interest_gongguiljeong.service.InterestGongguiljeongService;
 import io.swagger.v3.oas.annotations.Operation;

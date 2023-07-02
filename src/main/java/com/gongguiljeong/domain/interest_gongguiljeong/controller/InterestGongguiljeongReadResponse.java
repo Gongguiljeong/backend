@@ -1,6 +1,6 @@
 package com.gongguiljeong.domain.interest_gongguiljeong.controller;
 
-import com.gongguiljeong.domain.gongguiljeong.domain.GongguiljeongResponse;
+import com.gongguiljeong.domain.gongguiljeong.controller.response.GongguiljeongResponse;
 import com.gongguiljeong.domain.interest_gongguiljeong.domain.InterestGongguiljeong;
 import lombok.Builder;
 import lombok.Getter;
