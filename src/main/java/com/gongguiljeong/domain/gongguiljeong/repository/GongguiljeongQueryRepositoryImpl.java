@@ -1,20 +1,13 @@
 package com.gongguiljeong.domain.gongguiljeong.repository;
 
-import com.gongguiljeong.domain.admin.domain.QAdmin;
-import com.gongguiljeong.domain.brand.domain.QBrand;
-import com.gongguiljeong.domain.category.domain.QMainCategory;
-import com.gongguiljeong.domain.category.domain.QSubCategory;
 import com.gongguiljeong.domain.gongguiljeong.domain.Gongguiljeong;
-import com.gongguiljeong.domain.gongguiljeong.domain.QGongguiljeong;
-import com.gongguiljeong.domain.image.domain.QMainImage;
-import com.gongguiljeong.domain.influencer.domain.QInfluencer;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.util.StringUtils;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.List;
 
@@ -41,20 +34,23 @@ public class GongguiljeongQueryRepositoryImpl implements GongguiljeongQueryRepos
                 .join(gongguiljeong.influencer, influencer).fetchJoin()
                 .join(gongguiljeong.brand, brand).fetchJoin()
                 .join(gongguiljeong.admin, admin).fetchJoin()
-                .where(eqMainCategoryId(mainCategoryId), eqSubCategoryId(subCategoryId))
+                .where(eqMainCategoryId(mainCategoryId), eqSubCategoryId(subCategoryId, mainCategoryId))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
-        return new PageImpl<>(content,pageable, jpaQueryFactory.selectFrom(gongguiljeong)
+
+        JPAQuery<Long> countQuery = jpaQueryFactory.select(gongguiljeong.count())
+                .from(gongguiljeong)
                 .join(gongguiljeong.mainCategory, mainCategory).fetchJoin()
                 .join(gongguiljeong.mainImage, mainImage).fetchJoin()
                 .join(gongguiljeong.subCategory, subCategory).fetchJoin()
                 .join(gongguiljeong.influencer, influencer).fetchJoin()
                 .join(gongguiljeong.brand, brand).fetchJoin()
                 .join(gongguiljeong.admin, admin).fetchJoin()
-                .where(eqMainCategoryId(mainCategoryId), eqSubCategoryId(subCategoryId))
-                .fetchCount());
+                .where(eqMainCategoryId(mainCategoryId), eqSubCategoryId(subCategoryId, mainCategoryId));
         //TODO : count 쿼리 따로 작성해야함
+
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
 
     private BooleanExpression eqMainCategoryId(Long mainCategoryId) {
@@ -65,7 +61,10 @@ public class GongguiljeongQueryRepositoryImpl implements GongguiljeongQueryRepos
 
     }
 
-    private BooleanExpression eqSubCategoryId(Long subCategoryId) {
+    private BooleanExpression eqSubCategoryId(Long subCategoryId, Long mainCategoryId) {
+        if (mainCategoryId == null) {
+            return null;
+        }
         if (subCategoryId == null) {
             return null;
         }
