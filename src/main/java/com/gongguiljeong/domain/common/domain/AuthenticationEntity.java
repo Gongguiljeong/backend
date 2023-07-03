@@ -1,7 +1,6 @@
 package com.gongguiljeong.domain.common.domain;
 
 import com.gongguiljeong.domain.admin.domain.Role;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

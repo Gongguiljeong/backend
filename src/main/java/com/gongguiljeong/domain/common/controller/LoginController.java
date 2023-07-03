@@ -1,12 +1,12 @@
 package com.gongguiljeong.domain.common.controller;
 
 import com.gongguiljeong.domain.admin.domain.Admin;
-import com.gongguiljeong.domain.common.domain.LoginRequest;
 import com.gongguiljeong.domain.admin.domain.Role;
 import com.gongguiljeong.domain.admin.service.AdminService;
 import com.gongguiljeong.domain.brand.domain.Brand;
 import com.gongguiljeong.domain.brand.service.BrandService;
 import com.gongguiljeong.domain.common.domain.AuthenticationEntity;
+import com.gongguiljeong.domain.common.domain.LoginRequest;
 import com.gongguiljeong.domain.user.domain.KakaoProfile;
 import com.gongguiljeong.domain.user.domain.User;
 import com.gongguiljeong.domain.user.service.KakaoService;
@@ -14,7 +14,6 @@ import com.gongguiljeong.domain.user.service.UserService;
 import com.gongguiljeong.global.jwt.JwtProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -22,7 +21,6 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.time.Duration;
 

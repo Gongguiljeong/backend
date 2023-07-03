@@ -42,11 +42,7 @@ public class GongguiljeongQueryRepositoryImpl implements GongguiljeongQueryRepos
         JPAQuery<Long> countQuery = jpaQueryFactory.select(gongguiljeong.count())
                 .from(gongguiljeong)
                 .join(gongguiljeong.mainCategory, mainCategory).fetchJoin()
-                .join(gongguiljeong.mainImage, mainImage).fetchJoin()
                 .join(gongguiljeong.subCategory, subCategory).fetchJoin()
-                .join(gongguiljeong.influencer, influencer).fetchJoin()
-                .join(gongguiljeong.brand, brand).fetchJoin()
-                .join(gongguiljeong.admin, admin).fetchJoin()
                 .where(eqMainCategoryId(mainCategoryId), eqSubCategoryId(subCategoryId, mainCategoryId));
         //TODO : count 쿼리 따로 작성해야함
 
