@@ -1,6 +1,6 @@
-package com.gongguiljeong.domain.common.controller;
-
-class LoginControllerTest {
-
-
-}
+//package com.gongguiljeong.domain.common.controller;
+//
+//class LoginControllerTest {
+//
+//
+//}
