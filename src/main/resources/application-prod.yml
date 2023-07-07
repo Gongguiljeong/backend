@@ -1,26 +1,36 @@
 server:
-  port: 5000  # Elastic Beanstalk nginx 기본 포트
+  port: 5000
   servlet:
     encoding:
-      charset: utf-8
+      charset: UTF-8
+      enabled: true
       force: true
 
+
 spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
+
   datasource:
-    url: jdbc:mysql://${rds.hostname}:${rds.port}/${rds.db.name}?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://${rds.hostname}:${rds.port}/ebdb?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${rds.username}
     password: ${rds.password}
 
   jpa:
-    open-in-view: false
     hibernate:
-      ddl-auto: none
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: create
     properties:
       hibernate:
-        default_batch_fetch_size: 1000
+        default_batch_fetch_size: 50
+    open-in-view: false
+
+  sql:
+    init:
+      mode: never
 
   data:
     web:
@@ -29,10 +39,21 @@ spring:
         max-page-size: 2000
         one-indexed-parameters: on
 
-logging.level:
-  org.hibernate.SQL: debug
-  org:
-    hibernate:
-      type:
-        descriptor:
-          sql: trace
+
+
+springdoc:
+  packages-to-scan: com.ddungja.petmily
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  api-docs:
+    path: /api
+    groups:
+      enabled: true
+  cache:
+    disabled: true
+  swagger-ui:
+    path: /ui
+    operations-sorter: alpha, method
+    tags-sorter: alpha, method
+
+
